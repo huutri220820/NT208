@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Entities
 {
@@ -15,6 +11,7 @@ namespace DataLayer.Entities
         public virtual User User { get; set; }
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
+        // tu 1 den 5 sao
         public int Rating { get; set; }
         public string Comment { get; set; }
     }
@@ -23,6 +20,7 @@ namespace DataLayer.Entities
     {
         public void Configure(EntityTypeBuilder<ProductRating> builder)
         {
+            builder.Property(x => x.Rating).IsRequired(true).HasDefaultValue(5);
             builder.Property(x => x.Comment).IsRequired(false);
         }
     }

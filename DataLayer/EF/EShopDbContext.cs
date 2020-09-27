@@ -42,8 +42,6 @@ namespace DataLayer.EF
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new AddressConfiguration());
-            modelBuilder.ApplyConfiguration(new UserAddressConfiguration());
             modelBuilder.ApplyConfiguration(new ProductRatingConfiguration());
             modelBuilder.ApplyConfiguration(new CartItemConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
@@ -60,7 +58,6 @@ namespace DataLayer.EF
             modelBuilder.Seed();
         }
 
-        public DbSet<Address> Addresses { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -68,6 +65,5 @@ namespace DataLayer.EF
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductRating> ProductRatings { get; set; }
-        public DbSet<UserAddress> UserAddresses { get; set; }
     }
 }

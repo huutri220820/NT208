@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Entities
 {
@@ -37,6 +33,7 @@ namespace DataLayer.Entities
         {
             builder.HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
             builder.Property(x => x.Description).IsRequired(false);
+            builder.Property(x => x.Name).IsRequired(true);
         }
     }
 }

@@ -1,21 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Entities
 {
-    public class OrderDetail 
+    public class OrderDetail
     {
         public int OrderId { get; set; }
         public virtual Order Order { get; set; }
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
-        public int SoLuong { get; set; }
-        public int TriGia { get; set; }
+        public int Quantity { get; set; }
+        // totalprice = priceProduct * Quantity
+        public decimal TotalPrice { get; set; }
     }
 
     public class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>
@@ -23,6 +19,8 @@ namespace DataLayer.Entities
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
             builder.HasKey(x => new { x.OrderId, x.ProductId });
+            builder.Property(x => x.Quantity).IsRequired(true).HasDefaultValue(0);
+            builder.Property(x => x.TotalPrice).IsRequired(true).HasDefaultValue(0);
         }
     }
 }

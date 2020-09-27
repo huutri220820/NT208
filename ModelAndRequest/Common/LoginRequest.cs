@@ -19,7 +19,7 @@ namespace ModelAndRequest.Common
         public LoginRequestValidator()
         {
             RuleFor(x => x.Username).NotEmpty();
-            RuleFor(x => x.Password).NotNull();
+            RuleFor(x => x.Password).NotEmpty();
         }
     }
 }

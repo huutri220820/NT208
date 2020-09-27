@@ -28,7 +28,7 @@ namespace ServiceLayer.Admin.Product
                 Id = x.product.Id,
                 Name = x.category,
                 Category = x.category,
-                SoLuongConLai = x.product.SoLuongConLai,
+                SoLuongConLai = x.product.Available,
             }).ToListAsync();
 
             return result;
@@ -51,7 +51,7 @@ namespace ServiceLayer.Admin.Product
                 Category = data.category,
                 Description = data.product.Description,
                 Image = data.product.ProductImage,
-                SoLuongConLai = data.product.SoLuongConLai
+                SoLuongConLai = data.product.Available
             };
 
             return result;

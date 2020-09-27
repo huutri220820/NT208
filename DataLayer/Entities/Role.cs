@@ -4,10 +4,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Entities
 {
@@ -38,7 +34,7 @@ namespace DataLayer.Entities
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasMany(x => x.UserRoles).WithOne(x => x.Role).HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Cascade);
-            
+
             builder.Property(x => x.Description).IsRequired(false);
         }
     }

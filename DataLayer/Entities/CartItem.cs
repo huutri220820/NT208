@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Entities
 {
@@ -15,8 +11,10 @@ namespace DataLayer.Entities
         public virtual User User { get; set; }
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
-        public int SoLuong { get; set; }
+        // so luong
+        public int Quantity { get; set; }
         public DateTime DateCreate { get; set; }
+        // dat hang true, chua dat hang false
         public bool IsOrder { get; set; }
     }
 

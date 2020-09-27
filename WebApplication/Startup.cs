@@ -31,6 +31,7 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
 
+            //sqlserver
             services.AddDbContext<EShopDbContext>(option =>
                 option.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
@@ -38,7 +39,7 @@ namespace WebApplication
 
             );
 
-
+            //sqlite
             //services.AddEntityFrameworkSqlite()
             //        .AddDbContext<EShopDbContext>(option =>
             //            option.UseLoggerFactory(MyLoggerFactory
@@ -64,8 +65,14 @@ namespace WebApplication
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Administrator",
+                options.AddPolicy("Admin",
                      policy => policy.RequireRole("Administrator"));
+
+                options.AddPolicy("Sales",
+                    policy => policy.RequireRole("Administrator", "Sales"));
+
+                options.AddPolicy("User",
+                    policy => policy.RequireRole("User"));
             });
 
             services.ConfigureApplicationCookie(config =>

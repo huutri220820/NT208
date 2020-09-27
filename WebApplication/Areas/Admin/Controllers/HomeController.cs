@@ -21,7 +21,7 @@ namespace WebApplication.Areas.Admin.Controllers
         }
 
 
-        [Authorize(Policy = "Administrator")]
+        [Authorize(Policy = "Sales")]
         public IActionResult Index()
         {
             TempData["avatar"] = Images.AvatarDefault;
