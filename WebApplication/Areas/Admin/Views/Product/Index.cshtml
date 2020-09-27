@@ -1,0 +1,59 @@
+﻿@model List<ModelAndRequest.Common.ProductViewModel>
+
+@if (ViewBag.noData == 1)
+{
+    <h5>no data</h5>
+}
+else
+{
+    <div class="content-wrapper">
+        <div class="box-body">
+            <table width="100%" class="box table table-bordered table-hover" id="productTables">
+                <thead>
+                    <tr>
+                        <th><label asp-for="FirstOrDefault().Id"></label></th>
+                        <th><label asp-for="FirstOrDefault().Name"></label></th>
+                        <th><label asp-for="FirstOrDefault().Category"></label></th>
+                        <th><label asp-for="FirstOrDefault().SoLuongConLai"></label></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td>@product.Id</td>
+                            <td>@product.Name</td>
+                            <td>@product.Category</td>
+                            <td>@product.SoLuongConLai</td>
+                            <td class="text-right">
+                                <a asp-controller="Product" asp-action="Detail" asp-area="Admin" asp-route-id="@product.Id" class="btn-inverse-info btn-sm"><i class="mdi mdi-information-outline"></i></a>
+                                <a href="" class="btn-inverse-warning btn-sm"><i class="mdi mdi-table-edit"></i></a>
+                                <a href="" class="btn-inverse-danger btn-sm"><i class="mdi mdi-delete-forever"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @section style{
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/datatables.min.css" rel="stylesheet" />
+        <link href="~/admin/css/table.css" rel="stylesheet" />
+    }
+
+    @section script{
+        <script src="~/lib/DataTables/datatables.min.js"></script>
+        <script>
+            $('#productTables').DataTable({
+                responsive: true,
+                pageLength: 10,
+                lengthChange: false,
+                searching: true,
+                ordering: true
+            });
+        </script>
+    }
+}
