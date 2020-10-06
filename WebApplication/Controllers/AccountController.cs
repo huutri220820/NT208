@@ -27,7 +27,7 @@ namespace WebApplication.Controllers
         {
             var result = await accountService.Login(loginRequest);
             if (result.isLogin == true)
-                if (result.Role == "admin")
+                if (result.Role == "admin" || result.Role == "sales")
                     return RedirectToRoute("area", new { controller = "Home", action = "Index", area = "Admin" });                
                 else
                     return RedirectToRoute("default", new { controller = "Home", action = "Index" });

@@ -8,7 +8,7 @@ namespace ModelAndRequest.Common
 {
     public class ProductDetailViewModel : ProductViewModel
     {
-        public string Image { get; set; }
+        public int CategoryId { get; set; }
         public string Description { get; set; }
     }
 }

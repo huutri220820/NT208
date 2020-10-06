@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

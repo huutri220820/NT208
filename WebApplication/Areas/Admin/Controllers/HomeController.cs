@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataLayer.EF;
-using DataLayer.Enums;
+﻿using DataLayer.Enums;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PagedList.Core;
 using ServiceLayer.Admin.Product;
+using System.Net.Http;
 
 namespace WebApplication.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class HomeController : Controller
     {
-        public readonly IProductService productService;
+        private readonly IProductService productService;
         public HomeController(IProductService productService)
         {
             this.productService = productService;
@@ -24,10 +20,10 @@ namespace WebApplication.Areas.Admin.Controllers
         [Authorize(Policy = "Sales")]
         public IActionResult Index()
         {
-            TempData["avatar"] = Images.AvatarDefault;
-            TempData["account"] = "Admin";
+            ViewData["avatar"] = HttpContext.Session.GetString("avatar");
+            ViewData["account"] = HttpContext.Session.GetString("account");
             return View();
         }
-  
+
     }
 }

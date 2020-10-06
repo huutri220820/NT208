@@ -26,9 +26,10 @@ namespace ServiceLayer.Admin.Product
             var result = await data?.Select(x => new ProductViewModel()
             {
                 Id = x.product.Id,
+                Image = x.product.ProductImage,
                 Name = x.category,
                 Category = x.category,
-                SoLuongConLai = x.product.Available,
+                Available = x.product.Available,
             }).ToListAsync();
 
             return result;
@@ -48,10 +49,11 @@ namespace ServiceLayer.Admin.Product
             {
                 Id = data.product.Id,
                 Name = data.product.Name,
+                CategoryId = data.product.CategoryId,
                 Category = data.category,
                 Description = data.product.Description,
                 Image = data.product.ProductImage,
-                SoLuongConLai = data.product.Available
+                Available = data.product.Available
             };
 
             return result;

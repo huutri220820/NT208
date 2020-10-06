@@ -1,5 +1,7 @@
 ﻿using DataLayer.EF;
 using DataLayer.Entities;
+using DataLayer.Enums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ModelAndRequest.Common;
@@ -13,17 +15,16 @@ namespace ServiceLayer.Common.Account
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        //private readonly EShopDbContext eShopDbContext;
-
+        private readonly IHttpContextAccessor httpContextAccessor;
         public AccountService()
         {
 
         }
-        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            //this.eShopDbContext = eShopDbContext;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<(bool isLogin, string Role)> Login(LoginRequest loginRequest)
@@ -39,6 +40,9 @@ namespace ServiceLayer.Common.Account
                 var loginResult = await signInManager.PasswordSignInAsync(user, loginRequest.Password, loginRequest.Remember, lockoutOnFailure: false);
                 if (loginResult.Succeeded)
                 {
+                    httpContextAccessor.HttpContext.Session.SetString("avatar", Images.AvatarDefault);
+                    httpContextAccessor.HttpContext.Session.SetString("account", "Admin");
+
                     var admin = user.UserRoles.Find(x => x.Role.Name == "Administrator");
                     if (admin == null)
                     {

@@ -3,6 +3,7 @@ using DataLayer.Entities;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -82,9 +83,16 @@ namespace WebApplication
                 config.LoginPath = "/Account/Login";
             }
             );
+
+            //session
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
             //dependency injection
             services.AddScoped<IAccountService, AccountService>();
             services.AddTransient<IProductService, ProductService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -102,6 +110,8 @@ namespace WebApplication
 
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -110,7 +120,7 @@ namespace WebApplication
             {
                 endpoints.MapControllerRoute(
                     name: "area",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller}/{action=Index}/{id?}");
                 
                 endpoints.MapControllerRoute(
                     name: "default",

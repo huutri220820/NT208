@@ -23,18 +23,19 @@ namespace DataLayer.Extensions
                 new Category() { Id = 7, Name = "Sách - VPP" },
                 new Category() { Id = 8, Name = "Quà Tặng" }
                 );
+            var description = "<strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font - family: &quot; Open Sans&quot;, Arial, sans - serif; text - align: justify; \">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font - family: &quot; Open Sans&quot;, Arial, sans - serif; text - align: justify; \">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</span>";
 
             modelBuilder.Entity<Product>().HasData(
-                new Product() { Id = 1, Name = "SP1", Price = 10000, Available = 10, CategoryId = 1 },
-                new Product() { Id = 2, Name = "SP2", Price = 10000, Available = 10, CategoryId = 1 },
-                new Product() { Id = 3, Name = "SP3", Price = 10000, Available = 10, CategoryId = 2 },
-                new Product() { Id = 4, Name = "SP4", Price = 10000, Available = 10, CategoryId = 2 },
-                new Product() { Id = 5, Name = "SP5", Price = 10000, Available = 10, CategoryId = 2 },
-                new Product() { Id = 6, Name = "SP6", Price = 10000, Available = 10, CategoryId = 3 },
-                new Product() { Id = 7, Name = "SP7", Price = 10000, Available = 10, CategoryId = 3 },
-                new Product() { Id = 8, Name = "SP8", Price = 10000, Available = 10, CategoryId = 4 },
-                new Product() { Id = 9, Name = "SP9", Price = 10000, Available = 10, CategoryId = 4 },
-                new Product() { Id = 10, Name = "SP10", Price = 10000, Available = 10, CategoryId = 5 }
+                new Product() { Id = 1, Name = "SP1", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Product() { Id = 2, Name = "SP2", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Product() { Id = 3, Name = "SP3", Price = 10000, Available = 10, CategoryId = 2, Description = description },
+                new Product() { Id = 4, Name = "SP4", Price = 10000, Available = 10, CategoryId = 2, Description = description },
+                new Product() { Id = 5, Name = "SP5", Price = 10000, Available = 10, CategoryId = 2, Description = description },
+                new Product() { Id = 6, Name = "SP6", Price = 10000, Available = 10, CategoryId = 3, Description = description },
+                new Product() { Id = 7, Name = "SP7", Price = 10000, Available = 10, CategoryId = 3, Description = description },
+                new Product() { Id = 8, Name = "SP8", Price = 10000, Available = 10, CategoryId = 4, Description = description },
+                new Product() { Id = 9, Name = "SP9", Price = 10000, Available = 10, CategoryId = 4, Description = description },
+                new Product() { Id = 10, Name = "SP10", Price = 10000, Available = 10, CategoryId = 5, Description = description }
                 );
 
             //tai khoan admin
