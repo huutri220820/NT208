@@ -19,6 +19,7 @@
     <!-- Page plugins -->
     <!-- Argon CSS -->
     <link rel="stylesheet" href="~/admin/css/argon.css?v=1.2.0" type="text/css">
+    @RenderSection("style", false);
 </head>
 
 <body>
@@ -41,6 +42,7 @@
     <script src="~/admin/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
     <!-- Argon JS -->
     <script src="~/admin/js/argon.js?v=1.2.0"></script>
+    @RenderSection("script", false);
 </body>
 
 </html>

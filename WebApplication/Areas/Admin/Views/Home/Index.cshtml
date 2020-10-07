@@ -1,1 +1,15 @@
-﻿<h1>aaaaaaaaaaaaaa</h1>
+﻿<h1>Home</h1>
+
+@section script{ 
+    <script>
+ 
+        var avatar = @Html.Raw(Json.Serialize(ViewData["avatar"]));
+        var account = @Html.Raw(Json.Serialize(ViewData["account"]));
+        if (account != null && avatar != null) {
+            localStorage.setItem("avatar", avatar);
+            localStorage.setItem("account", account);
+            var a = localStorage.getItem("account");
+            console.log("a:", a);
+        }
+    </script>
+}

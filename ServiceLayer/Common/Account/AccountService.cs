@@ -18,7 +18,6 @@ namespace ServiceLayer.Common.Account
         private readonly IHttpContextAccessor httpContextAccessor;
         public AccountService()
         {
-
         }
         public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor)
         {

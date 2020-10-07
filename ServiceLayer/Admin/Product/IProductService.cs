@@ -11,5 +11,9 @@ namespace ServiceLayer.Admin.Product
     {
         Task<List<ProductViewModel>> GetAllProduct();
         ProductDetailViewModel GetProductById(int id);
+        // return id product
+        int AddProduct(ProductRequest productRequest);
+        bool EditProuct(ProductRequest productRequest);
+        bool DeleteProduct(int id);
     }
 }

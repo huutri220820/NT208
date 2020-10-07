@@ -33,7 +33,7 @@ namespace WebApplication.Areas.Admin.Controllers
                 ViewBag.noData = 1;
                 return View();
             }
-            return View(productViews);
+            return Ok(productViews);
         }
         public IActionResult Detail(int id)
         {
@@ -46,7 +46,7 @@ namespace WebApplication.Areas.Admin.Controllers
                 return View();
             }
 
-            return View(product);
+            return Ok(product);
         }
     }
 }

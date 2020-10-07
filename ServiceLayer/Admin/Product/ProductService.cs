@@ -58,5 +58,20 @@ namespace ServiceLayer.Admin.Product
 
             return result;
         }
+
+        public int AddProduct(ProductRequest productRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteProduct(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EditProuct(ProductRequest productRequest)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
