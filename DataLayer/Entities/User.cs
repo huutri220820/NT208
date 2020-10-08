@@ -62,6 +62,14 @@ namespace DataLayer.Entities
             get => this.lazyLoader.Load(this, ref this.inboxes);
             set => this.inboxes = value;
         }
+
+        private List<Blog> blogs;
+        //chi co admin va sales moi su dung blog de dang tin
+        public virtual List<Blog> Blogs
+        {
+            get => this.lazyLoader.Load(this, ref this.blogs);
+            set => this.blogs = value;
+        }
     }
 
     public class UserConfiguration : IEntityTypeConfiguration<User>
@@ -73,6 +81,7 @@ namespace DataLayer.Entities
             builder.HasMany(x => x.ProductRatings).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(x => x.UserRoles).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(x => x.Inboxes).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x => x.Blogs).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.SetNull);
 
             builder.Property(x => x.Avatar).HasDefaultValue(Images.AvatarDefault);
             builder.Property(x => x.Email).HasMaxLength(50).IsRequired(false).IsUnicode(false);

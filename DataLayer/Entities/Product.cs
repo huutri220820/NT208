@@ -36,6 +36,8 @@ namespace DataLayer.Entities
             get => this.lazyLoader.Load(this, ref this.productRatings);
             set => this.productRatings = value;
         }
+        //giam gia
+        public double Sale { get; set; }
 
 
 
@@ -52,6 +54,7 @@ namespace DataLayer.Entities
             builder.Property(x => x.ProductImage).HasDefaultValue(Images.ProductImageDefault).IsRequired(true);
             builder.Property(x => x.Available).IsRequired(true).HasDefaultValue(0);
             builder.Property(x => x.Price).IsRequired(true).HasDefaultValue(0);
+            builder.Property(x => x.Sale).IsRequired(false);
         }
     }
 }
