@@ -10,7 +10,7 @@ namespace DataLayer.Entities
         public int Id { get; set; }
         public int OrderRef { get; set; }
         public virtual Order Order { get; set; }
-        public virtual HinhThucTT HinhThucTT { get; set; }
+        public virtual PayMethod PayMethod { get; set; }
         // phi van chuyen
         public decimal Ship { get; set; }
         //ngay tao la ngay thanh toan
@@ -23,7 +23,7 @@ namespace DataLayer.Entities
         public void Configure(EntityTypeBuilder<Bill> builder)
         {
             builder.Property(x => x.Ship).IsRequired(true).HasDefaultValue(0);
-            builder.Property(x => x.HinhThucTT).IsRequired(true).HasDefaultValue(HinhThucTT.COD);
+            builder.Property(x => x.PayMethod).IsRequired(true).HasDefaultValue(PayMethod.COD);
             builder.Property(x => x.TotalPrice).IsRequired(true).HasDefaultValue(0);
             builder.Property(x => x.DateCreate).IsRequired(true).HasDefaultValue(DateTime.Now);
         }

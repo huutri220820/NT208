@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Enums
 {
-    public enum HinhThucTT
+    public enum PayMethod
     {
         CREDICT,
         COD
