@@ -9,7 +9,7 @@ namespace ServiceLayer.Admin.Product
 {
     public interface IBookService
     {
-        Task<List<BookViewModel>> GetAllBook();
+        Task<List<BookViewModel>> GetAllBook(int? categoryId = null);
         BookDetailViewModel GetBookById(int id);
         // return id product
         int AddBook(BookRequest productRequest);

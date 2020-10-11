@@ -23,11 +23,11 @@ namespace WebApplication.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryId = null)
         {
             ViewData["avatar"] = HttpContext.Session.GetString("avatar");
             ViewData["account"] = HttpContext.Session.GetString("account");
-            var bookView = await this.bookService.GetAllBook();
+            var bookView = await this.bookService.GetAllBook(categoryId);
             if (bookView == null)
             {
                 ViewBag.noData = 1;

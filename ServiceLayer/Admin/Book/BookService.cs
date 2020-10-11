@@ -33,19 +33,20 @@ namespace ServiceLayer.Admin.Product
             throw new NotImplementedException();
         }
 
-        public async Task<List<BookViewModel>> GetAllBook()
+        public async Task<List<BookViewModel>> GetAllBook(int? categoryId = null)
         {
             var data = from b in eShopDb.Books
+                       where categoryId == null || b.CategoryId == categoryId
                        join c in eShopDb.Categories on b.CategoryId equals c.Id
                        select new { book = b, category = c.Name};
 
             var result = await data?.Select(x => new BookViewModel()
             {
                 Id = x.book.Id,
-                Image = x.book.BookImage,
-                Name = x.category,
+                Name = x.book.Name,
                 Category = x.category,
                 Available = x.book.Available,
+                Image = x.book.BookImage,
             }).ToListAsync();
 
             return result;
@@ -68,8 +69,8 @@ namespace ServiceLayer.Admin.Product
                 CategoryId = data.book.CategoryId,
                 Category = data.category,
                 Description = data.book.Description,
-                Image = data.book.BookImage,
-                Available = data.book.Available
+                Available = data.book.Available,
+                Image = data.book.BookImage
             };
 
             return result;
