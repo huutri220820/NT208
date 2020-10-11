@@ -61,6 +61,7 @@ namespace WebApplication
                 .AddEntityFrameworkStores<EShopDbContext>()
                 .AddDefaultTokenProviders();
 
+            //fluent validator
             services.AddControllersWithViews()
                     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
