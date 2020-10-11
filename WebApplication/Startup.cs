@@ -37,7 +37,6 @@ namespace WebApplication
                 option.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
-
             );
 
             //sqlite
