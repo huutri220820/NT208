@@ -21,7 +21,6 @@ namespace WebApplication
     {
         public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
