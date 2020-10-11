@@ -32,13 +32,16 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             //sqlserver
+            
             services.AddDbContext<EShopDbContext>(option =>
                 option.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
             );
 
+
             //sqlite
+            
             //services.AddEntityFrameworkSqlite()
             //        .AddDbContext<EShopDbContext>(option =>
             //            option.UseLoggerFactory(MyLoggerFactory
