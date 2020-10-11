@@ -33,6 +33,7 @@ namespace WebApplication
         {
 
             //sqlserver
+            
             services.AddDbContext<EShopDbContext>(option =>
                 option.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
@@ -40,7 +41,9 @@ namespace WebApplication
 
             );
 
+
             //sqlite
+            
             //services.AddEntityFrameworkSqlite()
             //        .AddDbContext<EShopDbContext>(option =>
             //            option.UseLoggerFactory(MyLoggerFactory
