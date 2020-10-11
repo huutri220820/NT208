@@ -9,8 +9,8 @@ namespace DataLayer.Entities
         public int Id { get; set; }
         public Guid UserId { get; set; }
         public virtual User User { get; set; }
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        public int BookId { get; set; }
+        public virtual Book Book { get; set; }
         // so luong
         public int Quantity { get; set; }
         public DateTime DateCreate { get; set; }

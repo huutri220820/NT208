@@ -91,7 +91,7 @@ namespace WebApplication
             });
             //dependency injection
             services.AddScoped<IAccountService, AccountService>();
-            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IBookService, BookService>();
 
         }
 

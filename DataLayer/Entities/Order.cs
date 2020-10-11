@@ -36,7 +36,7 @@ namespace DataLayer.Entities
         }
         public decimal TotalPrice { get; set; }
         public string Note { get; set; }
-        public virtual Bill Bill { get; set; }
+        public virtual Receipt Receipt { get; set; }
     }
 
     public class OrderConfiguration : IEntityTypeConfiguration<Order>
@@ -44,7 +44,7 @@ namespace DataLayer.Entities
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.HasMany(x => x.OrderDetails).WithOne(x => x.Order).HasForeignKey(x => x.OrderId).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(x => x.Bill).WithOne(x => x.Order).HasForeignKey<Bill>(x => x.OrderRef).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.Receipt).WithOne(x => x.Order).HasForeignKey<Receipt>(x => x.OrderRef).OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(x => x.DateCreate).IsRequired(true).HasDefaultValue(DateTime.Now);
             builder.Property(x => x.DateModify).IsRequired(false);

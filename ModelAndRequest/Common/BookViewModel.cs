@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModelAndRequest.Common
 {
-    public class ProductViewModel
+    public class BookViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

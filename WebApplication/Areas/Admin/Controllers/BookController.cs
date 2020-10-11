@@ -13,13 +13,13 @@ namespace WebApplication.Areas.Admin.Controllers
 {
     [Authorize(Policy = "Sales")]
     [Area("Admin")]
-    public class ProductController : Controller
+    public class BookController : Controller
     {
-        private readonly IProductService productService;
+        private readonly IBookService bookService;
         
-        public ProductController(IProductService productService)
+        public BookController(IBookService productService)
         {
-            this.productService = productService;
+            this.bookService = productService;
         }
 
         [HttpGet]
@@ -27,26 +27,26 @@ namespace WebApplication.Areas.Admin.Controllers
         {
             ViewData["avatar"] = HttpContext.Session.GetString("avatar");
             ViewData["account"] = HttpContext.Session.GetString("account");
-            var productViews = await this.productService.GetAllProduct();
-            if (productViews == null)
+            var bookView = await this.bookService.GetAllBook();
+            if (bookView == null)
             {
                 ViewBag.noData = 1;
                 return View();
             }
-            return Ok(productViews);
+            return Ok(bookView);
         }
         public IActionResult Detail(int id)
         {
             ViewData["avatar"] = HttpContext.Session.GetString("avatar");
             ViewData["account"] = HttpContext.Session.GetString("account");
-            var product = this.productService.GetProductById(id);
-            if (product == null)
+            var book = this.bookService.GetBookById(id);
+            if (book == null)
             {
                 ViewBag.isNull = 1;
                 return View();
             }
 
-            return Ok(product);
+            return Ok(book);
         }
     }
 }

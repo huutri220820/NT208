@@ -5,7 +5,7 @@ using System;
 
 namespace DataLayer.Entities
 {
-    public class Bill
+    public class Receipt
     {
         public int Id { get; set; }
         public int OrderRef { get; set; }
@@ -18,9 +18,9 @@ namespace DataLayer.Entities
         public decimal TotalPrice { get; set; }
     }
 
-    public class BillConfiguration : IEntityTypeConfiguration<Bill>
+    public class BillConfiguration : IEntityTypeConfiguration<Receipt>
     {
-        public void Configure(EntityTypeBuilder<Bill> builder)
+        public void Configure(EntityTypeBuilder<Receipt> builder)
         {
             builder.Property(x => x.Ship).IsRequired(true).HasDefaultValue(0);
             builder.Property(x => x.PayMethod).IsRequired(true).HasDefaultValue(PayMethod.COD);

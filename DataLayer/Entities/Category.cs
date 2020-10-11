@@ -19,11 +19,11 @@ namespace DataLayer.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        private List<Product> products;
-        public virtual List<Product> Products
+        private List<Book> books;
+        public virtual List<Book> Books
         {
-            get => this.lazyLoader.Load(this, ref this.products);
-            set => this.products = value;
+            get => this.lazyLoader.Load(this, ref this.books);
+            set => this.books = value;
         }
     }
 
@@ -31,7 +31,7 @@ namespace DataLayer.Entities
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Category> builder)
         {
-            builder.HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x => x.Books).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
             builder.Property(x => x.Description).IsRequired(false);
             builder.Property(x => x.Name).IsRequired(true);
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModelAndRequest.Common
 {
-    public class ProductRequest 
+    public class BookRequest 
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModelAndRequest.Admin
 {
-    public class ProductRequest
+    public class BookRequest
     {
     }
 }

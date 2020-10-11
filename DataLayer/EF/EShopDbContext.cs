@@ -40,9 +40,9 @@ namespace DataLayer.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new BookConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductRatingConfiguration());
+            modelBuilder.ApplyConfiguration(new BookRatingConfiguration());
             modelBuilder.ApplyConfiguration(new CartItemConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
@@ -58,12 +58,12 @@ namespace DataLayer.EF
             modelBuilder.Seed();
         }
 
-        public DbSet<Bill> Bills { get; set; }
+        public DbSet<Receipt> Bills { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductRating> ProductRatings { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookRating> BookRatings { get; set; }
     }
 }

@@ -42,11 +42,11 @@ namespace DataLayer.Entities
             set => this.orders = value;
         }
 
-        private List<ProductRating> productRatings;
-        public virtual List<ProductRating> ProductRatings
+        private List<BookRating> bookRatings;
+        public virtual List<BookRating> BookRatings
         {
-            get => this.lazyLoader.Load(this, ref this.productRatings);
-            set => this.productRatings = value;
+            get => this.lazyLoader.Load(this, ref this.bookRatings);
+            set => this.bookRatings = value;
         }
 
         private List<UserRole> userRoles;
@@ -78,10 +78,10 @@ namespace DataLayer.Entities
         {
             builder.HasMany(x => x.CartItems).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(x => x.Orders).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
-            builder.HasMany(x => x.ProductRatings).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x => x.BookRatings).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(x => x.UserRoles).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(x => x.Inboxes).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
-            builder.HasMany(x => x.Blogs).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.SetNull);
+            builder.HasMany(x => x.Blogs).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(x => x.Avatar).HasDefaultValue(Images.AvatarDefault);
             builder.Property(x => x.Email).HasMaxLength(50).IsRequired(false).IsUnicode(false);

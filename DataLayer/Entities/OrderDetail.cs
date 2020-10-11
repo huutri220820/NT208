@@ -7,10 +7,10 @@ namespace DataLayer.Entities
     {
         public int OrderId { get; set; }
         public virtual Order Order { get; set; }
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        public int BookId { get; set; }
+        public virtual Book Book { get; set; }
         public int Quantity { get; set; }
-        // totalprice = priceProduct * Quantity
+        // totalprice = priceBook * Quantity
         public decimal TotalPrice { get; set; }
     }
 
@@ -18,7 +18,7 @@ namespace DataLayer.Entities
     {
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
-            builder.HasKey(x => new { x.OrderId, x.ProductId });
+            builder.HasKey(x => new { x.OrderId, x.BookId });
             builder.Property(x => x.Quantity).IsRequired(true).HasDefaultValue(0);
             builder.Property(x => x.TotalPrice).IsRequired(true).HasDefaultValue(0);
         }

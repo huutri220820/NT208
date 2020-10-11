@@ -10,10 +10,10 @@ namespace WebApplication.Areas.Admin.Controllers
     [Area("Admin")]
     public class HomeController : Controller
     {
-        private readonly IProductService productService;
-        public HomeController(IProductService productService)
+        private readonly IBookService bookService;
+        public HomeController(IBookService productService)
         {
-            this.productService = productService;
+            this.bookService = productService;
         }
 
 
