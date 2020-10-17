@@ -18,7 +18,7 @@ namespace DataLayer.Entities
         public decimal TotalPrice { get; set; }
     }
 
-    public class BillConfiguration : IEntityTypeConfiguration<Receipt>
+    public class ReceiptConfiguration : IEntityTypeConfiguration<Receipt>
     {
         public void Configure(EntityTypeBuilder<Receipt> builder)
         {

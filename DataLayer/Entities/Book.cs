@@ -30,6 +30,7 @@ namespace DataLayer.Entities
         // so luong san co
         public int Available { get; set; }
 
+
         private List<BookRating> bookRatings;
         public virtual List<BookRating> BookRatings
         {

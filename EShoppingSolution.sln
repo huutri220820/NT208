@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLayer", "ServiceLaye
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelAndRequest", "ModelAndRequest\ModelAndRequest.csproj", "{5552A367-513A-45B8-B83F-031E43D800E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{81A9C6AD-8B1D-47AE-870D-7A632589B899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "WebApplication\WebApplication.csproj", "{81A9C6AD-8B1D-47AE-870D-7A632589B899}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
