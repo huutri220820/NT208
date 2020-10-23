@@ -28,12 +28,12 @@ namespace WebApplication.Areas.Admin.Controllers
             ViewData["avatar"] = HttpContext.Session.GetString("avatar");
             ViewData["account"] = HttpContext.Session.GetString("account");
             var bookView = await this.bookService.GetAllBook(categoryId);
-            if (bookView == null)
+            if (bookView.bookListView == null)
             {
                 ViewBag.noData = 1;
-                return View();
+                return Ok(200);
             }
-            return Ok(bookView);
+            return Ok(new { total = bookView.total,  bookList = bookView.bookListView});
         }
         public IActionResult Detail(int id)
         {

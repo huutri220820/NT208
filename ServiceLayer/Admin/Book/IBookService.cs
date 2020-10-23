@@ -1,4 +1,5 @@
-﻿using ModelAndRequest.Common;
+﻿using ModelAndRequest.Admin;
+using ModelAndRequest.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ServiceLayer.Admin.Product
 {
     public interface IBookService
     {
-        Task<List<BookViewModel>> GetAllBook(int? categoryId = null);
+        Task<(List<BookViewModel> bookListView, int total)> GetAllBook(int? categoryId = null, string search = null, int? page = null, int count = 10);
         BookDetailViewModel GetBookById(int id);
         // return id product
         int AddBook(BookRequest productRequest);

@@ -1,5 +1,6 @@
 ﻿using DataLayer.EF;
 using Microsoft.EntityFrameworkCore;
+using ModelAndRequest.Admin;
 using ModelAndRequest.Common;
 using System;
 using System.Collections.Generic;
@@ -33,12 +34,16 @@ namespace ServiceLayer.Admin.Product
             throw new NotImplementedException();
         }
 
-        public async Task<List<BookViewModel>> GetAllBook(int? categoryId = null)
+       
+
+        public async Task<(List<BookViewModel> bookListView, int total)> GetAllBook(int? categoryId = null, string search = null, int? page = null, int count = 10)
         {
             var data = from b in eShopDb.Books
                        where categoryId == null || b.CategoryId == categoryId
                        join c in eShopDb.Categories on b.CategoryId equals c.Id
-                       select new { book = b, category = c.Name};
+                       select new { book = b, category = c.Name };
+
+            var total = data.Count();
 
             var result = await data?.Select(x => new BookViewModel()
             {
@@ -49,7 +54,7 @@ namespace ServiceLayer.Admin.Product
                 Image = x.book.BookImage,
             }).ToListAsync();
 
-            return result;
+            return (bookListView: result, total: total);
         }
 
         public BookDetailViewModel GetBookById(int id)

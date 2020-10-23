@@ -8,5 +8,12 @@ namespace ModelAndRequest.Admin
 {
     public class BookRequest
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public string Category { get; set; }
+        public int Available { get; set; }
+        public string Image { get; set; }
+        public string Descripton { get; set; }
     }
 }
