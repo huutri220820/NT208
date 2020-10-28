@@ -23,5 +23,6 @@ namespace DataLayer.Entities
         public void Configure(EntityTypeBuilder<CartItem> builder)
         {
         }
+
     }
 }
