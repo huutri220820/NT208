@@ -21,14 +21,14 @@ namespace WebAPI.Controllers
             this.accountService = accountService;
         }
         [HttpPost]
-        public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest)
+        public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
             var token = await accountService.Login(loginRequest);
             return Ok(token);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromForm] RegisterRequest registerRequest)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
         {
             var result = await accountService.Register(registerRequest);
 
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
         }
         [Authorize(policy: "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateSales([FromForm] RegisterRequest registerRequest)
+        public async Task<IActionResult> CreateSales([FromBody] RegisterRequest registerRequest)
         {
             var result = await accountService.CreateSales(registerRequest);
             return Ok(result);

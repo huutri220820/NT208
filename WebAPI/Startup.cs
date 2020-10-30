@@ -21,8 +21,7 @@ namespace WebAPI
 {
     public class Startup
     {
-        public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
-
+        private static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,21 +32,24 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllers();
 
+            //connect database, lazy load
             services.AddDbContext<EShopDbContext>(option =>
                 option.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
             );
 
+            // use swagger 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Book store", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "Bearer [token]",
+                    Description = "Coppy token in respone => paste to input with format : Bearer [token]",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
@@ -67,12 +69,10 @@ namespace WebAPI
                           Scheme = "oauth2",
                           Name = "Bearer",
                           In = ParameterLocation.Header,
-                        },
-                        new List<string>()
+                        },new List<string>()
                       }
                     });
             });
-
 
             services.AddIdentity<User, Role>(config =>
             {
@@ -90,6 +90,7 @@ namespace WebAPI
                     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
 
+            // get issuer, key in appsettings.json  => create key
             string issuer = Configuration.GetValue<string>("Tokens:Issuer");
             string signingKey = Configuration.GetValue<string>("Tokens:Key");
             byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
@@ -112,11 +113,12 @@ namespace WebAPI
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ClockSkew = System.TimeSpan.Zero,
+                    //ma hoa doi xung
                     IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                 };
             });
 
-
+            //tao policy tu cac role
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Admin",
@@ -144,6 +146,14 @@ namespace WebAPI
             app.UseAuthentication();
 
             app.UseRouting();
+
+            //app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseCors(builder =>
+                    builder.WithOrigins("*")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod());
+
 
             app.UseAuthorization();
 
