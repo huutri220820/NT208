@@ -18,7 +18,6 @@ namespace DataLayer.Entities
         }
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
         private List<Book> books;
         public virtual List<Book> Books
         {
@@ -32,7 +31,6 @@ namespace DataLayer.Entities
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Category> builder)
         {
             builder.HasMany(x => x.Books).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
-            builder.Property(x => x.Description).IsRequired(false);
             builder.Property(x => x.Name).IsRequired(true);
         }
     }

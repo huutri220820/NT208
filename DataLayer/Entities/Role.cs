@@ -19,7 +19,6 @@ namespace DataLayer.Entities
         {
             this.lazyLoader = lazyLoader;
         }
-        public string Description { get; set; }
 
         private List<UserRole> userRoles;
         public virtual List<UserRole> UserRoles
@@ -35,7 +34,6 @@ namespace DataLayer.Entities
         {
             builder.HasMany(x => x.UserRoles).WithOne(x => x.Role).HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Cascade);
 
-            builder.Property(x => x.Description).IsRequired(false);
         }
     }
 }

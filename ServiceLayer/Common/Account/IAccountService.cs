@@ -1,4 +1,5 @@
-﻿using ModelAndRequest.Common;
+﻿using ModelAndRequest.API;
+using ModelAndRequest.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace ServiceLayer.Common.Account
 {
     public interface IAccountService
     {
-        Task<(bool isLogin, string Role)> Login(LoginRequest loginRequest);
-        Task SignOut();
+        Task<ApiResult<object>> Login(LoginRequest loginRequest);
+        Task<ApiResult<bool>> Register(RegisterRequest registerRequest, bool isSale = false);
+        Task<ApiResult<bool>> CreateSales(RegisterRequest registerRequest);
     }
 }

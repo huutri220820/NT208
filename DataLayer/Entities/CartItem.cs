@@ -13,9 +13,6 @@ namespace DataLayer.Entities
         public virtual Book Book { get; set; }
         // so luong
         public int Quantity { get; set; }
-        public DateTime DateCreate { get; set; }
-        // dat hang true, chua dat hang false
-        public bool IsOrder { get; set; }
     }
 
     public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
