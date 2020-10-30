@@ -21,24 +21,29 @@ namespace ServiceLayer.Common.Account
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly RoleManager<Role> roleManager;
         private readonly IConfiguration config;
+        private readonly EShopDbContext eShopDbContext;
 
         public AccountService()
         {
         }
-        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor, IConfiguration config)
+        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager,  RoleManager<Role> roleManager, IConfiguration config, EShopDbContext eShopDbContext)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.httpContextAccessor = httpContextAccessor;
+            this.roleManager = roleManager;
+            this.eShopDbContext = eShopDbContext;
             this.config = config;
         }
 
         public async Task<ApiResult<object>> Login(LoginRequest loginRequest)
         {
             // tim user neu khong co tra ve thong bao loi
-            var user = await userManager.FindByNameAsync(loginRequest.Username);
+            //sqlserver
+            //var user = await userManager.FindByNameAsync(loginRequest.Username);
+            //sqlite
+            var user = userManager.Users.FirstOrDefault(user => user.UserName == loginRequest.Username);
             if (user == null) return new ApiResult<object>(isSuccess: false, messge: "Khong tin thay user", payload: null);
 
             var result = await signInManager.PasswordSignInAsync(user, loginRequest.Password, loginRequest.Remember, true);
@@ -75,9 +80,12 @@ namespace ServiceLayer.Common.Account
 
         public async Task<ApiResult<bool>> Register(RegisterRequest registerRequest, bool isSale = false)
         {
-            if (await userManager.FindByNameAsync(registerRequest.Username) != null)
+            //sql server
+            //if (await userManager.FindByNameAsync(registerRequest.Username) != null)
+            //sqlite
+            if (userManager.Users.FirstOrDefault(user => user.UserName == registerRequest.Username) != null)
                 return new ApiResult<bool>(isSuccess: false, messge: "User name da ton tai", payload: false);
-            if(await userManager.FindByEmailAsync(registerRequest.Email) != null)
+            if(userManager.Users.FirstOrDefault(user => user.Email == registerRequest.Email) != null)
                 return new ApiResult<bool>(isSuccess: false, messge: "Email da ton tai", payload: false);
 
             var user = new User()
@@ -98,7 +106,18 @@ namespace ServiceLayer.Common.Account
             
             if(result.Succeeded)
             {
-                await userManager.AddToRoleAsync(user, "User");
+                //sql server
+                //await userManager.AddToRoleAsync(user, "User");
+
+                //sqlite
+                var roleUser = roleManager.Roles.FirstOrDefault(role => role.Name == (isSale ? "Sales" : "User"));
+                eShopDbContext.UserRoles.Add(new UserRole()
+                {
+                    UserId = user.Id,
+                    RoleId = roleUser.Id
+                });
+
+                await eShopDbContext.SaveChangesAsync();
                 return new ApiResult<bool>(isSuccess: true, messge: "Dang ki thanh cong", payload: true);
             }
 

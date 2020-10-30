@@ -36,10 +36,20 @@ namespace WebAPI
             services.AddControllers();
 
             //connect database, lazy load
-            services.AddDbContext<EShopDbContext>(option =>
-                option.UseLoggerFactory(MyLoggerFactory)
-                .UseLazyLoadingProxies()
-                .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
+            //services.AddDbContext<EShopDbContext>(option =>
+            //    option.UseLoggerFactory(MyLoggerFactory)
+            //    .UseLazyLoadingProxies()
+            //    .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
+            //);
+
+
+            services.AddEntityFrameworkSqlite()
+                    .AddDbContext<EShopDbContext>(option =>
+                        option.UseLoggerFactory(MyLoggerFactory
+
+                        )
+                    .UseLazyLoadingProxies()
+                    .UseSqlite(Configuration.GetConnectionString("eshopSqlite"))
             );
 
             // use swagger 
