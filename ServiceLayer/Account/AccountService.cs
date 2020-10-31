@@ -78,7 +78,7 @@ namespace ServiceLayer.Account
                 signingCredentials: creds);
 
             var tokenResult = new JwtSecurityTokenHandler().WriteToken(token);
-            return new ApiResult<object>(success: true, messge: "Dang nhap thanh cong", payload: new { token = tokenResult, role = roleResult });
+            return new ApiResult<object>(success: true, messge: "Dang nhap thanh cong", payload: new { token = tokenResult, role = roleResult, id = user.Id });
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace ServiceLayer.Account
         }
 
         /// <summary>
-        /// get all account (role admin
+        /// get all account (role admin)
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
@@ -179,7 +179,12 @@ namespace ServiceLayer.Account
             return new ApiResult<List<AccountModel>>(success: false, messge: "Tim thay danh sach user", payload: users);
 
         }
-
+        /// <summary>
+        /// delete accoubt  (sales
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public async Task<ApiResult<bool>> DeleteAccount(Guid id, string role)
         {
             var user = await userManager.FindByIdAsync(id.ToString());
@@ -196,6 +201,33 @@ namespace ServiceLayer.Account
                 return new ApiResult<bool>(success: false, messge: "Xoa khong thanh cong", payload: false);
 
             return new ApiResult<bool>(success: false, messge: "Xoa thanh cong", payload: true);
+        }
+        /// <summary>
+        /// get info account by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<ApiResult<AccountModel>> GetById(Guid id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+
+            if (user == null)
+                return new ApiResult<AccountModel>(success: false, messge: "Khong tim thay user", payload: null);
+
+            var result = new AccountModel()
+            {
+                id = user.Id,
+                username = user.UserName,
+                fullName = user.FullName,
+                email = user.Email,
+                phonenumber = user.PhoneNumber,
+                address = user.Address,
+                dob = user.Dob,
+                avatar = user.Avatar,
+                isMale = user.IsMale
+            };
+
+            return new ApiResult<AccountModel>(success: true, messge: "thanh cong", payload: result);
         }
     }
 }

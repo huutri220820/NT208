@@ -11,6 +11,7 @@ namespace ServiceLayer.Account
         Task<ApiResult<object>> Login(LoginRequest loginRequest);
         Task<ApiResult<bool>> Register(RegisterRequest registerRequest, bool isSale = false);
         Task<ApiResult<bool>> CreateSales(RegisterRequest registerRequest);
+        Task<ApiResult<AccountModel>> GetById(Guid id);
         Task<ApiResult<List<AccountModel>>> GetAllAccount(string role);
         Task<ApiResult<bool>> DeleteAccount(Guid id, string role);
     }
