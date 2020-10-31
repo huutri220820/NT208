@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelAndRequest.Common
+namespace ModelAndRequest.Book
 {
     public class BookDetailViewModel : BookViewModel
     {
-        public int CategoryId { get; set; }
-        public string Description { get; set; }
+        public int categoryId { get; set; }
+        public string description { get; set; }
     }
 }

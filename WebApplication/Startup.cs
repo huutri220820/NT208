@@ -32,24 +32,24 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             //sqlserver
-            
-            services.AddDbContext<EShopDbContext>(option =>
-                option.UseLoggerFactory(MyLoggerFactory)
-                .UseLazyLoadingProxies()
-                .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
-            );
+
+            //services.AddDbContext<EShopDbContext>(option =>
+            //    option.UseLoggerFactory(MyLoggerFactory)
+            //    .UseLazyLoadingProxies()
+            //    .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
+            //);
 
 
             //sqlite
-            
-            //services.AddEntityFrameworkSqlite()
-            //        .AddDbContext<EShopDbContext>(option =>
-            //            option.UseLoggerFactory(MyLoggerFactory
-                        
-            //            )
-            //        .UseLazyLoadingProxies()
-            //        .UseSqlite(Configuration.GetConnectionString("eshopSqlite"))
-            //);
+
+            services.AddEntityFrameworkSqlite()
+                    .AddDbContext<EShopDbContext>(option =>
+                        option.UseLoggerFactory(MyLoggerFactory
+
+                        )
+                    .UseLazyLoadingProxies()
+                    .UseSqlite(Configuration.GetConnectionString("eshopSqlite"))
+            );
 
             services.AddIdentity<User, Role>(config =>
             {

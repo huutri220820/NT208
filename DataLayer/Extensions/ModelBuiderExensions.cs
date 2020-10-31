@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Extensions
 {
@@ -23,19 +19,19 @@ namespace DataLayer.Extensions
                 new Category() { Id = 7, Name = "Khoa học kĩ thuật" },
                 new Category() { Id = 8, Name = "Khác" }
                 );
-            var description = "<strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font - family: &quot; Open Sans&quot;, Arial, sans - serif; text - align: justify; \">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font - family: &quot; Open Sans&quot;, Arial, sans - serif; text - align: justify; \">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</span>";
 
+            var description = "<strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font - family: &quot; Open Sans&quot;, Arial, sans - serif; text - align: justify; \">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font - family: &quot; Open Sans&quot;, Arial, sans - serif; text - align: justify; \">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</span>";
             modelBuilder.Entity<Book>().HasData(
-                new Book() { Id = 1, Name = "SP1", Price = 10000, Available = 10, CategoryId = 1, Description = description },
-                new Book() { Id = 2, Name = "SP2", Price = 10000, Available = 10, CategoryId = 1, Description = description },
-                new Book() { Id = 3, Name = "SP3", Price = 10000, Available = 10, CategoryId = 2, Description = description },
-                new Book() { Id = 4, Name = "SP4", Price = 10000, Available = 10, CategoryId = 2, Description = description },
-                new Book() { Id = 5, Name = "SP5", Price = 10000, Available = 10, CategoryId = 2, Description = description },
-                new Book() { Id = 6, Name = "SP6", Price = 10000, Available = 10, CategoryId = 3, Description = description },
-                new Book() { Id = 7, Name = "SP7", Price = 10000, Available = 10, CategoryId = 3, Description = description },
-                new Book() { Id = 8, Name = "SP8", Price = 10000, Available = 10, CategoryId = 4, Description = description },
-                new Book() { Id = 9, Name = "SP9", Price = 10000, Available = 10, CategoryId = 4, Description = description },
-                new Book() { Id = 10, Name = "SP10", Price = 10000, Available = 10, CategoryId = 5, Description = description }
+                new Book() { Id = 1, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Book() { Id = 2, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Book() { Id = 3, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 2, Description = description },
+                new Book() { Id = 4, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 2, Description = description },
+                new Book() { Id = 5, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 2, Description = description },
+                new Book() { Id = 6, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 3, Description = description },
+                new Book() { Id = 7, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 3, Description = description },
+                new Book() { Id = 8, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 4, Description = description },
+                new Book() { Id = 9, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 4, Description = description },
+                new Book() { Id = 10, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 5, Description = description }
                 );
 
             //tai khoan admin
@@ -49,15 +45,15 @@ namespace DataLayer.Extensions
                     Id = adminId,
                     Email = "admin@gmail.com",
                     NormalizedEmail = "admin@gmail.com",
-                    UserName ="admin",
+                    UserName = "admin",
                     NormalizedUserName = "admin",
                     PasswordHash = hasher.HashPassword(null, "1"),
                     SecurityStamp = string.Empty,
                     FullName = "Administrator",
-                    EmailConfirmed =true,
+                    EmailConfirmed = true,
                     Dob = DateTime.Now,
                     PhoneNumber = "0123456788",
-                    Gender = true
+                    IsMale = true
                 }
                 );
 
@@ -95,7 +91,7 @@ namespace DataLayer.Extensions
                     EmailConfirmed = true,
                     Dob = DateTime.Now,
                     PhoneNumber = "0123456789",
-                    Gender = true
+                    IsMale = true
                 }
                 );
 
@@ -133,7 +129,7 @@ namespace DataLayer.Extensions
                     EmailConfirmed = true,
                     Dob = DateTime.Now,
                     PhoneNumber = "0123456787",
-                    Gender = true
+                    IsMale = true
                 }
                 );
 

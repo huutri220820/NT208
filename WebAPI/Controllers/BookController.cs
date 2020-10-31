@@ -13,13 +13,13 @@ namespace WebAPI.Controllers
     public class BookController : ControllerBase
     {
         [HttpGet]
-        public IActionResult getall()
+        public IActionResult getAll()
         {
             return Ok(200); 
         }
-        [Authorize(policy: "Admin")]
+
         [HttpGet("{id}")]
-        public IActionResult getbyid(int id)
+        public IActionResult getById(int id)
         {
             return Ok(id);
         }
@@ -30,5 +30,7 @@ namespace WebAPI.Controllers
         {
             return Ok();
         }
+
+
     }
 }

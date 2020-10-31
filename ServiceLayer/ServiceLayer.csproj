@@ -9,8 +9,4 @@
     <ProjectReference Include="..\ModelAndRequest\ModelAndRequest.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="User\" />
-  </ItemGroup>
-
 </Project>

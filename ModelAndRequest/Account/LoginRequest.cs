@@ -5,21 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelAndRequest.Common
+namespace ModelAndRequest.Account
 {
     public class LoginRequest
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public bool Remember { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public bool remember { get; set; }
     }
 
     public class LoginRequestValidator : AbstractValidator<LoginRequest>
     {
         public LoginRequestValidator()
         {
-            RuleFor(x => x.Username).NotEmpty();
-            RuleFor(x => x.Password).NotEmpty();
+            RuleFor(x => x.username).NotEmpty();
+            RuleFor(x => x.password).NotEmpty();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using DataLayer.EF;
 using Microsoft.EntityFrameworkCore;
-using ModelAndRequest.Admin;
-using ModelAndRequest.Common;
+using ModelAndRequest.Book;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ServiceLayer.Admin.Product
+namespace ServiceLayer.Book
 {
     public class BookService : IBookService
     {
@@ -34,7 +33,7 @@ namespace ServiceLayer.Admin.Product
             throw new NotImplementedException();
         }
 
-       
+
 
         public async Task<(List<BookViewModel> bookListView, int total)> GetAllBook(int? categoryId = null, string search = null, int? page = null, int count = 10)
         {
@@ -47,40 +46,40 @@ namespace ServiceLayer.Admin.Product
 
             var result = await data?.Select(x => new BookViewModel()
             {
-                Id = x.book.Id,
-                Name = x.book.Name,
-                Category = x.category,
-                Available = x.book.Available,
-                Image = x.book.BookImage,
+                id = x.book.Id,
+                name = x.book.Name,
+                category = x.category,
+                available = x.book.Available,
+                image = x.book.BookImage,
             }).ToListAsync();
 
-            return (bookListView: result, total: total);
+            return (bookListView: result, total);
         }
 
         public BookDetailViewModel GetBookById(int id)
         {
             var data = (from b in eShopDb.Books
-                       join c in eShopDb.Categories on b.CategoryId equals c.Id
-                       where b.Id == id
-                       select new { book = b, category = c.Name }).FirstOrDefault();
+                        join c in eShopDb.Categories on b.CategoryId equals c.Id
+                        where b.Id == id
+                        select new { book = b, category = c.Name }).FirstOrDefault();
 
             if (data == null)
                 return null;
 
             var result = new BookDetailViewModel()
             {
-                Id = data.book.Id,
-                Name = data.book.Name,
-                CategoryId = data.book.CategoryId,
-                Category = data.category,
-                Description = data.book.Description,
-                Available = data.book.Available,
-                Image = data.book.BookImage
+                id = data.book.Id,
+                name = data.book.Name,
+                categoryId = data.book.CategoryId,
+                category = data.category,
+                description = data.book.Description,
+                available = data.book.Available,
+                image = data.book.BookImage
             };
 
             return result;
         }
 
-        
+
     }
 }

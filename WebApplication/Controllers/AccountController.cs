@@ -25,22 +25,13 @@ namespace WebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-            var result = await accountService.Login(loginRequest);
-            if (result.isLogin == true)
-                if (result.Role == "admin" || result.Role == "sales")
-                    return RedirectToRoute("area", new { controller = "Home", action = "Index", area = "Admin" });                
-                else
-                    return RedirectToRoute("default", new { controller = "Home", action = "Index" });
-            
-            ViewBag.LoginFail = 1;
-
-            return View(loginRequest);
+            return Ok(loginRequest);
         }
 
         public async Task<IActionResult> SignOut()
         {
-            await accountService.SignOut();
-            return RedirectToAction("Index", "Home");
+
+            return Ok();
         }
         public IActionResult AccessDenied()
         {

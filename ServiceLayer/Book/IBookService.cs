@@ -1,12 +1,11 @@
-﻿using ModelAndRequest.Admin;
-using ModelAndRequest.Common;
+﻿using ModelAndRequest.Book;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceLayer.Admin.Product
+namespace ServiceLayer.Book
 {
     public interface IBookService
     {

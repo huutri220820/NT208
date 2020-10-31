@@ -24,7 +24,7 @@ namespace DataLayer.Entities
         public DateTime Dob { get; set; }
         public string Avatar { get; set; }
         //true la nam, false la nu
-        public bool Gender { get; set; }
+        public bool IsMale { get; set; }
 
         public string Address { get; set; }
 
@@ -79,7 +79,7 @@ namespace DataLayer.Entities
             builder.Property(x => x.Email).HasMaxLength(50).IsRequired(false).IsUnicode(false);
             builder.Property(x => x.PhoneNumber).HasMaxLength(10).IsRequired(true).IsUnicode(false);
             builder.Property(x => x.FullName).HasMaxLength(50).IsRequired(true).IsUnicode(true);
-            builder.Property(x => x.Gender).IsRequired(true);
+            builder.Property(x => x.IsMale).IsRequired(true);
             builder.Property(x => x.Address).HasMaxLength(200).IsRequired(true).HasDefaultValue("none");
         }
     }

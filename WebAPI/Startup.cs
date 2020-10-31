@@ -1,21 +1,21 @@
+using DataLayer.EF;
+using DataLayer.Entities;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using ServiceLayer.Admin.Product;
-using ServiceLayer.Common.Account;
-using Microsoft.EntityFrameworkCore;
-using ModelAndRequest.Common;
-using DataLayer.EF;
-using DataLayer.Entities;
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using ModelAndRequest.Account;
+using ServiceLayer.Account;
+using ServiceLayer.Book;
+using System.Collections.Generic;
 
 namespace WebAPI
 {
@@ -36,21 +36,22 @@ namespace WebAPI
             services.AddControllers();
 
             //connect database, lazy load
-            //services.AddDbContext<EShopDbContext>(option =>
-            //    option.UseLoggerFactory(MyLoggerFactory)
-            //    .UseLazyLoadingProxies()
-            //    .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
-            //);
-
-
-            services.AddEntityFrameworkSqlite()
-                    .AddDbContext<EShopDbContext>(option =>
-                        option.UseLoggerFactory(MyLoggerFactory
-
-                        )
-                    .UseLazyLoadingProxies()
-                    .UseSqlite(Configuration.GetConnectionString("eshopSqlite"))
+            //sqlserver
+            services.AddDbContext<EShopDbContext>(option =>
+                option.UseLoggerFactory(MyLoggerFactory)
+                .UseLazyLoadingProxies()
+                .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
             );
+
+            //sqlite
+            //services.AddEntityFrameworkSqlite()
+            //        .AddDbContext<EShopDbContext>(option =>
+            //            option.UseLoggerFactory(MyLoggerFactory
+
+            //            )
+            //        .UseLazyLoadingProxies()
+            //        .UseSqlite(Configuration.GetConnectionString("eshopSqlite"))
+            //);
 
             // use swagger 
             services.AddSwaggerGen(c =>
