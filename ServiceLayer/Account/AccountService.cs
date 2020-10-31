@@ -44,9 +44,9 @@ namespace ServiceLayer.Account
         {
             // tim user neu khong co tra ve thong bao loi
             //sqlserver
-            var user = await userManager.FindByNameAsync(loginRequest.username);
+            //var user = await userManager.FindByNameAsync(loginRequest.username);
             //sqlite
-            //var user = userManager.Users.FirstOrDefault(user => user.UserName == loginRequest.Username);
+            var user = userManager.Users.FirstOrDefault(user => user.UserName == loginRequest.username);
             if (user == null) return new ApiResult<object>(success: false, messge: "Khong tin thay user", payload: null);
 
             var result = await signInManager.PasswordSignInAsync(user, loginRequest.password, loginRequest.remember, true);
@@ -90,9 +90,9 @@ namespace ServiceLayer.Account
         public async Task<ApiResult<bool>> Register(RegisterRequest registerRequest, bool isSale = false)
         {
             //sql server
-            if (await userManager.FindByNameAsync(registerRequest.username) != null)
-                //sqlite
-                //if (userManager.Users.FirstOrDefault(user => user.UserName == registerRequest.Username) != null)
+            //if (await userManager.FindByNameAsync(registerRequest.username) != null)
+            //sqlite
+            if (userManager.Users.FirstOrDefault(user => user.UserName == registerRequest.username) != null)
                 return new ApiResult<bool>(success: false, messge: "User name da ton tai", payload: false);
             if (userManager.Users.FirstOrDefault(user => user.Email == registerRequest.email) != null)
                 return new ApiResult<bool>(success: false, messge: "Email da ton tai", payload: false);
@@ -116,16 +116,16 @@ namespace ServiceLayer.Account
             if (result.Succeeded)
             {
                 //sql server
-                await userManager.AddToRoleAsync(user, "User");
+                //await userManager.AddToRoleAsync(user, "User");
 
                 //sqlite
-                //var roleUser = roleManager.Roles.FirstOrDefault(role => role.Name == (isSale ? "Sales" : "User"));
-                //eShopDbContext.UserRoles.Add(new UserRole()
-                //{
-                //    UserId = user.Id,
-                //    RoleId = roleUser.Id
-                //});
-                //await eShopDbContext.SaveChangesAsync();
+                var roleUser = roleManager.Roles.FirstOrDefault(role => role.Name == (isSale ? "Sales" : "User"));
+                eShopDbContext.UserRoles.Add(new UserRole()
+                {
+                    UserId = user.Id,
+                    RoleId = roleUser.Id
+                });
+                await eShopDbContext.SaveChangesAsync();
 
                 return new ApiResult<bool>(success: true, messge: "Dang ki thanh cong", payload: true);
             }
@@ -187,9 +187,14 @@ namespace ServiceLayer.Account
         /// <returns></returns>
         public async Task<ApiResult<bool>> DeleteAccount(Guid id, string role)
         {
-            var user = await userManager.FindByIdAsync(id.ToString());
+            //sql server
+            //var user = await userManager.FindByIdAsync(id.ToString());
+            //sqlite
+            var user = await userManager.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            //sql server
             var roles = await userManager.GetRolesAsync(user);
-            if(!roles.Contains(role))
+            if (!roles.Contains(role))
                 return new ApiResult<bool>(success: false, messge: "Khong co quyen xoa user nay", payload: false);
 
             if (user == null)
@@ -209,7 +214,10 @@ namespace ServiceLayer.Account
         /// <returns></returns>
         public async Task<ApiResult<AccountModel>> GetById(Guid id)
         {
-            var user = await userManager.FindByIdAsync(id.ToString());
+            //sql server
+            //var user = await userManager.FindByIdAsync(id.ToString());
+            //sqlite
+            var user = await userManager.Users.FirstOrDefaultAsync(x => x.Id == id);
 
             if (user == null)
                 return new ApiResult<AccountModel>(success: false, messge: "Khong tim thay user", payload: null);
