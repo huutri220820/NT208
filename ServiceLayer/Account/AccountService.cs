@@ -64,7 +64,7 @@ namespace ServiceLayer.Account
             };
             var roleResult = "user";
 
-            roleResult = roles.Contains("Admin") ? "admin" : roleResult;
+            roleResult = roles.Contains("Administrator") ? "admin" : roleResult;
             roleResult = roles.Contains("Sales") ? "sales" : roleResult;
 
             // ma hoa doi xung
