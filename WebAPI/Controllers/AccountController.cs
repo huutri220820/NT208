@@ -34,6 +34,7 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("/api/account")]
+        [Authorize]
         public async Task<IActionResult> GetAccount(Guid id)
         {
 
@@ -51,7 +52,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete]
-        //[Authorize(policy: "Admin")]
+        [Authorize(policy: "Admin")]
         [Route("/api/admin/account/[action]")]
         public async Task<IActionResult> sales (Guid id)
         {
@@ -60,7 +61,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        //[Authorize(policy: "Admin")]
+        [Authorize(policy: "Admin")]
         [Route("/api/admin/account/sales/all")]
         public async Task<IActionResult> getAllSales()
         {
@@ -69,7 +70,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        //[Authorize(policy: "Admin")]
+        [Authorize(policy: "Admin")]
         [Route("/api/admin/account/user/all")]
         public async Task<IActionResult> getAllUser()
         {
