@@ -24,6 +24,9 @@ namespace DataLayer.Entities
             get => this.lazyLoader.Load(this, ref this.books);
             set => this.books = value;
         }
+
+        //dung cho tim kiem
+        public string KeyWord { get; set; }
     }
 
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>

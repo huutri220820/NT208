@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ModelAndRequest.Account
 {
+    /// <summary>
+    /// update account
+    /// </summary>
     public class AccountRequest : AccountModel
     {
         public override bool isMale { get; set; } = false;

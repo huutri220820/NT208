@@ -6,9 +6,18 @@ using System.Threading.Tasks;
 
 namespace ModelAndRequest.Book
 {
-    public class BookDetailViewModel : BookViewModel
+    public class BookDetailViewModel 
     {
+        public int id { get; set; }
+        public string name { get; set; }
+        public decimal price { get; set; }
+        public decimal sale { get; set; }
+        public string category { get; set; }
         public int categoryId { get; set; }
+        public int available { get; set; }
+        //base64 or url image
+        public string image { get; set; }
+        public string keyWord { get; set; }
         public string description { get; set; }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ModelAndRequest.Account
 {
+    /// <summary>
+    /// get info account
+    /// </summary>
     public class AccountModel
     {
         public Guid id { get; set; }

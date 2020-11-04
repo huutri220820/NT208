@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServiceLayer.Account
+namespace ServiceLayer.AccountServices
 {
     public interface IAccountService
     {

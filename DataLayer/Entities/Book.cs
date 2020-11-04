@@ -30,18 +30,20 @@ namespace DataLayer.Entities
         // so luong san co
         public int Available { get; set; }
 
-
         private List<BookRating> bookRatings;
         public virtual List<BookRating> BookRatings
         {
             get => this.lazyLoader.Load(this, ref this.bookRatings);
             set => this.bookRatings = value;
         }
-        //giam gia
-        public double Sale { get; set; }
+        //giam gia : % so tien se giam di
+        public decimal Sale { get; set; }
 
-
-
+        //dung cho tim kiem va sap xep
+        public string KeyWord { get; set; }
+        public int WeekScore { get; set; }
+        public int MonthScore { get; set; }
+        public int YearScore { get; set; }
     }
 
     public class BookConfiguration : IEntityTypeConfiguration<Book>
@@ -52,10 +54,13 @@ namespace DataLayer.Entities
 
             builder.Property(x => x.Name).IsUnicode().IsRequired(true).HasMaxLength(50).HasDefaultValue("Product");
             builder.Property(x => x.Description).IsRequired(false);
-            builder.Property(x => x.BookImage).HasDefaultValue(Images.BookImage).IsRequired(true);
+            builder.Property(x => x.BookImage).HasDefaultValue(Lorem.BookImage).IsRequired(true);
             builder.Property(x => x.Available).IsRequired(true).HasDefaultValue(0);
             builder.Property(x => x.Price).IsRequired(true).HasDefaultValue(0);
             builder.Property(x => x.Sale).HasDefaultValue(0);
+            builder.Property(x => x.WeekScore).HasDefaultValue(0);
+            builder.Property(x => x.MonthScore).HasDefaultValue(0);
+            builder.Property(x => x.YearScore).HasDefaultValue(0);
         }
     }
 }

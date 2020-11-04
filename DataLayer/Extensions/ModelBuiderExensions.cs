@@ -1,4 +1,5 @@
 ﻿using DataLayer.Entities;
+using DataLayer.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,32 +11,33 @@ namespace DataLayer.Extensions
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category() { Id = 1, Name = "Văn học" },
-                new Category() { Id = 2, Name = "Kinh tế" },
-                new Category() { Id = 3, Name = "Thiếu nhi" },
-                new Category() { Id = 4, Name = "Ngoại ngữ" },
-                new Category() { Id = 5, Name = "Khoa học kĩ thuật" },
-                new Category() { Id = 6, Name = "Lịch sử - Địa lý - Tôn giáo" },
-                new Category() { Id = 7, Name = "Khoa học kĩ thuật" },
+                new Category() { Id = 1, Name = "Văn học" , KeyWord= "vanhoc, van hoc" },
+                new Category() { Id = 2, Name = "Kinh tế" , KeyWord = "kinhte, kinh te" },
+                new Category() { Id = 3, Name = "Thiếu nhi", KeyWord = "thieunhi, thieu nhi" },
+                new Category() { Id = 4, Name = "Ngoại ngữ", KeyWord = "ngoaingu, ngoai ngu" },
+                new Category() { Id = 5, Name = "Khoa học kĩ thuật", KeyWord= "khoa hoc ki thuat, khoa hoc ky thuat, Khoa học kỹ thuật" },
+                new Category() { Id = 6, Name = "Lịch sử - Địa lý - Tôn giáo", KeyWord="lich su, dia li, dia ly, ton giao" },
+                new Category() { Id = 7, Name = "Khoa học kĩ thuật", KeyWord = "khoa hoc, khoa hoc ki thuat, ki thuat" },
                 new Category() { Id = 8, Name = "Khác" }
                 );
 
-            var description = "<strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font - family: &quot; Open Sans&quot;, Arial, sans - serif; text - align: justify; \">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font - family: &quot; Open Sans&quot;, Arial, sans - serif; text - align: justify; \">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</span>";
+            var description = Lorem.BookDescription;
+
             modelBuilder.Entity<Book>().HasData(
-                new Book() { Id = 1, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
-                new Book() { Id = 2, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
-                new Book() { Id = 3, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 2, Description = description },
-                new Book() { Id = 4, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 2, Description = description },
-                new Book() { Id = 5, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 2, Description = description },
-                new Book() { Id = 6, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 3, Description = description },
-                new Book() { Id = 7, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 3, Description = description },
-                new Book() { Id = 8, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 4, Description = description },
-                new Book() { Id = 9, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 4, Description = description },
-                new Book() { Id = 10, Name = "Đắc nhân tâm", Price = 10000, Available = 10, CategoryId = 5, Description = description }
+                new Book() { Id = 1, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", WeekScore = 10 },
+                new Book() { Id = 2, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", MonthScore = 10 },
+                new Book() { Id = 3, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", YearScore = 10 },
+                new Book() { Id = 4, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
+                new Book() { Id = 5, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
+                new Book() { Id = 6, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
+                new Book() { Id = 7, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Book() { Id = 8, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Book() { Id = 9, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Book() { Id = 10, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description }
                 );
 
             //tai khoan admin
-            var adminId = new Guid("DE8783CE-05A8-4AC2-88AD-99EF6CAF6957");
+            var adminId = new Guid("DE8781CE-01A8-1AC1-88AD-99EF6CAF6957");
             var roleAdminId = new Guid("7D2E5394-DDC3-4BBC-9ECB-327F2F37CE6C");
 
             var hasher = new PasswordHasher<User>();

@@ -10,10 +10,11 @@ namespace ModelAndRequest.Book
     {
         public int id { get; set; }
         public string name { get; set; }
-        public double price { get; set; }
+        public decimal price { get; set; }
+        public decimal sale { get; set; }
         public string category { get; set; }
         public int available { get; set; }
-        //base64 iamge
+        //base64 or url image
         public string image { get; set; }
     }
 }

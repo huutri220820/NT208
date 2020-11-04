@@ -13,8 +13,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ModelAndRequest.Account;
-using ServiceLayer.Account;
-using ServiceLayer.Book;
+using ServiceLayer.AccountServices;
+using ServiceLayer.BookServices;
 using System.Collections.Generic;
 
 namespace WebAPI
@@ -154,6 +154,8 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
+
             app.UseAuthentication();
 
             app.UseRouting();

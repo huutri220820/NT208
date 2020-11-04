@@ -14,7 +14,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceLayer.Account
+namespace ServiceLayer.AccountServices
 {
     public class AccountService : IAccountService
     {
@@ -155,7 +155,7 @@ namespace ServiceLayer.Account
                        join r in eShopDbContext.Roles on ur.RoleId equals r.Id
                        where r.Name == role
                        select new { user = u };
-    
+
 
             if (data == null)
                 return new ApiResult<List<AccountModel>>(success: false, messge: "Khong tim thay user", payload: null);
@@ -165,15 +165,15 @@ namespace ServiceLayer.Account
                 id = data.user.Id,
                 username = data.user.UserName,
                 fullName = data.user.FullName,
-                isMale =data.user.IsMale,
-                email =data.user.Email,
-                phonenumber =data.user.PhoneNumber,
-                dob =data.user.Dob,
-                address =data.user.Address,
+                isMale = data.user.IsMale,
+                email = data.user.Email,
+                phonenumber = data.user.PhoneNumber,
+                dob = data.user.Dob,
+                address = data.user.Address,
                 avatar = data.user.Avatar,
             }).ToListAsync();
 
-            if(users == null)
+            if (users == null)
                 return new ApiResult<List<AccountModel>>(success: false, messge: "Khong tim thay user", payload: null);
 
             return new ApiResult<List<AccountModel>>(success: false, messge: "Tim thay danh sach user", payload: users);
@@ -189,7 +189,7 @@ namespace ServiceLayer.Account
         {
             var user = await userManager.FindByIdAsync(id.ToString());
             var roles = await userManager.GetRolesAsync(user);
-            if(!roles.Contains(role))
+            if (!roles.Contains(role))
                 return new ApiResult<bool>(success: false, messge: "Khong co quyen xoa user nay", payload: false);
 
             if (user == null)
@@ -197,7 +197,7 @@ namespace ServiceLayer.Account
 
             var result = await userManager.DeleteAsync(user);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
                 return new ApiResult<bool>(success: false, messge: "Xoa khong thanh cong", payload: false);
 
             return new ApiResult<bool>(success: false, messge: "Xoa thanh cong", payload: true);

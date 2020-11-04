@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Account;
-using ServiceLayer.Account;
+using ServiceLayer.AccountServices;
 using System;
 using System.Threading.Tasks;
 
@@ -77,8 +77,6 @@ namespace WebAPI.Controllers
             var result = await accountService.GetAllAccount("User");
             return Ok(result);
         }
-
-   
 
     }
 }

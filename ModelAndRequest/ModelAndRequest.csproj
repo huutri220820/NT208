@@ -18,4 +18,9 @@
     <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Category\" />
+    <Folder Include="Order\" />
+  </ItemGroup>
+
 </Project>
