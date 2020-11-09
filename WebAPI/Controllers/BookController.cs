@@ -22,9 +22,16 @@ namespace WebAPI.Controllers
             this.bookService = bookService;
         }
 
+        [HttpGet]
+        [Route("/api/book/all")]
+        public async Task<IActionResult> GetAllBook()
+        {
+            var result = await bookService.GetAll();
+            return Ok(result);
+        }
 
         [HttpGet]
-        [Route("/api/book/get")]
+        [Route("/api/book/query")]
         public async Task<IActionResult> GetBookPagging(int page = 1, int size = 10, string orderBy = "Price", bool dsc = false, int? categoryId = null, string search = null)
         {
             var result = await bookService.GetBook(page, size, orderBy, dsc, categoryId, search);
@@ -32,43 +39,56 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("/api/book/all")]
-        public async Task<IActionResult> GetAll()
-        {
-            var result = await bookService.GetAll();
-            return Ok(result);
-        }
-
-        [HttpGet]
-        [Route("/api/book/detail/{id}")]
-        public async Task<IActionResult> getById(int id)
+        [Route("/api/book/{id}")]
+        public async Task<IActionResult> GetBookById(int id)
         {
             var result = await bookService.GetBookById(id);
             return Ok(result);
         }
 
         [HttpPost]
-        [Route("/api/book/add")]
-        public async Task<IActionResult> AddBook([FromForm] BookRequest bookRequest)
+        [Authorize(policy: "Admin")]
+        [Route("/api/admin/book")]
+        public async Task<IActionResult> AddBook([FromBody] BookRequest bookRequest)
         {
             var result = await bookService.AddBook(bookRequest);
             return Ok(result);
         }
 
         [HttpPost]
-        [Route("/api/book/adds")]
-        public async Task<IActionResult> AddBookS([FromBody] BookRequest bookRequest)
+        [Authorize(policy: "Admin")]
+        [Route("/api/admin/book/{id}")]
+        public async Task<IActionResult> UpdateBook([FromBody] BookRequest bookRequest)
         {
-            var result = await bookService.AddBook(bookRequest);
+            var result = await bookService.GetBookById(4);
             return Ok(result);
         }
 
         [HttpDelete]
-        [Route("api/book")]
+        [Authorize(policy: "Admin")]
+        [Route("/api/admin/book")]
         public async Task<IActionResult> RemoveBook(int id)
         {
             var result = await bookService.DeleteBook(id);
             return Ok(result);
         }
+
+        //test api
+        [HttpPost]
+        [Route("/api/admin/book/test")]
+        public async Task<IActionResult> AddBookTest([FromForm] BookRequest bookRequest)
+        {
+            var result = await bookService.AddBook(bookRequest);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("/api/admin/book/test/{id}")]
+        public async Task<IActionResult> UpdateBookTest([FromForm] BookRequest bookRequest)
+        {
+            var result = await bookService.GetBookById(4);
+            return Ok(result);
+        }
+
     }
 }

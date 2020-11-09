@@ -32,6 +32,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+
         [HttpGet]
         [Route("/api/account")]
         [Authorize]
@@ -42,23 +43,15 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Authorize(policy: "Admin")]
-        [Route("/api/admin/account/[action]")]
-        public async Task<IActionResult> sales([FromBody] RegisterRequest registerRequest)
+        [Route("/api/admin/account")]
+        public async Task<IActionResult> DeleteAccount(Guid id)
         {
-            var result = await accountService.CreateSales(registerRequest);
+            var result = await accountService.DeleteAccount(id);
             return Ok(result);
         }
 
-        [HttpDelete]
-        [Authorize(policy: "Admin")]
-        [Route("/api/admin/account/[action]")]
-        public async Task<IActionResult> sales (Guid id)
-        {
-            var result = await accountService.DeleteAccount(id, "Sales");
-            return Ok(result);
-        }
 
         [HttpGet]
         [Authorize(policy: "Admin")]
@@ -69,14 +62,23 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize(policy: "Admin")]
+        [Route("/api/admin/account/sales")]
+        public async Task<IActionResult> CreateSales([FromBody] RegisterRequest registerRequest)
+        {
+            var result = await accountService.CreateSales(registerRequest);
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Authorize(policy: "Sales")]
         [Route("/api/admin/account/user/all")]
         public async Task<IActionResult> getAllUser()
         {
             var result = await accountService.GetAllAccount("User");
             return Ok(result);
         }
-
     }
 }

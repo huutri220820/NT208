@@ -2,6 +2,7 @@
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using ModelAndRequest.API;
 using ModelAndRequest.Book;
 using System;
@@ -20,10 +21,12 @@ namespace ServiceLayer.BookServices
     {
         private readonly EShopDbContext eShopDb;
         private readonly IWebHostEnvironment env;
-        public BookService(EShopDbContext eShopDb, IWebHostEnvironment env)
+        private IConfiguration configuration;
+        public BookService(EShopDbContext eShopDb, IWebHostEnvironment env, IConfiguration configuration)
         {
             this.eShopDb = eShopDb;
             this.env = env;
+            this.configuration = configuration;
         }
 
         public async Task<ApiResult<bool>> AddBook(BookRequest bookRequest)
@@ -51,7 +54,7 @@ namespace ServiceLayer.BookServices
                 KeyWord = bookRequest.keyWord,
                 Price = bookRequest.price,
                 Sale = bookRequest.sale,
-                BookImage = "BookImages/" + fileName
+                BookImage = "BookImages/" + fileName,
             };
             eShopDb.Books.Add(book);
             await eShopDb.SaveChangesAsync();
@@ -88,15 +91,17 @@ namespace ServiceLayer.BookServices
 
             int total = data.Count();
 
+            var baseUrl = configuration.GetSection("baseUrl").Value;
+
             var books = await data.Select(x => new BookViewModel()
             {
                 id = x.book.Id,
                 category = x.category,
                 available = x.book.Available,
-                image = x.book.BookImage,
+                image = x.book.BookImage.Contains("http") ? x.book.BookImage : baseUrl + x.book.BookImage,
                 name = x.book.Name,
                 price = x.book.Price,
-                sale = x.book.Sale
+                sale = x.book.Sale,
             }).ToListAsync();
 
             return new ApiResult<object>(success: true, messge: "Thanh cong", payload: new { total, books });
@@ -132,12 +137,15 @@ namespace ServiceLayer.BookServices
 
             int totalPage = (int)Math.Ceiling((decimal)data.Count() / size);
             data = data.AsQueryable().OrderBy($"book.{orderBy} {(dsc ? "descending" : "")}").Skip((page - 1) * size).Take(size);
+
+            var baseUrl = configuration.GetSection("baseUrl").Value;
+
             var books = await data.Select(x => new BookViewModel()
             {
                 id = x.book.Id,
                 category = x.category,
                 available = x.book.Available,
-                image = x.book.BookImage,
+                image = x.book.BookImage.Contains("http") ? x.book.BookImage : baseUrl + x.book.BookImage,
                 name = x.book.Name,
                 price = x.book.Price,
                 sale = x.book.Sale
@@ -152,6 +160,7 @@ namespace ServiceLayer.BookServices
             if (book == null)
                 return new ApiResult<object>(success: false, messge: "Khong tim thay sach", payload: null);
 
+            var baseUrl = configuration.GetSection("baseUrl").Value;
 
             var result = new BookDetailViewModel()
             {
@@ -162,8 +171,9 @@ namespace ServiceLayer.BookServices
                 available = book.Available,
                 price = book.Price,
                 sale = book.Sale,
-                image = book.BookImage,
-                description = book.Description
+                image = book.BookImage.Contains("http") ? book.BookImage : baseUrl + book.BookImage,
+                description = book.Description,
+                keyWord = book.KeyWord
             };
 
             return new ApiResult<object>(success: true, messge: "Thanh cong", payload: new { book = result });

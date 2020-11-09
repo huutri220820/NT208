@@ -35,6 +35,8 @@ namespace DataLayer.Entities
             set => this.orderDetails = value;
         }
         public decimal TotalPrice { get; set; }
+
+        public bool isDelete { get; set; }
     }
 
     public class OrderConfiguration : IEntityTypeConfiguration<Order>
@@ -49,6 +51,7 @@ namespace DataLayer.Entities
             builder.Property(x => x.Address).HasMaxLength(200).IsRequired(true);
             builder.Property(x => x.OrderStatus).IsRequired(true);
             builder.Property(x => x.TotalPrice).IsRequired(true).HasDefaultValue(0);
+            builder.Property(x => x.isDelete).HasDefaultValue(false);
 
         }
     }

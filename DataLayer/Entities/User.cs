@@ -63,6 +63,8 @@ namespace DataLayer.Entities
             get => this.lazyLoader.Load(this, ref this.blogs);
             set => this.blogs = value;
         }
+
+        public bool isDelete { get; set; }
     }
 
     public class UserConfiguration : IEntityTypeConfiguration<User>
@@ -80,6 +82,7 @@ namespace DataLayer.Entities
             builder.Property(x => x.PhoneNumber).HasMaxLength(10).IsRequired(true).IsUnicode(false);
             builder.Property(x => x.FullName).HasMaxLength(50).IsRequired(true).IsUnicode(true);
             builder.Property(x => x.IsMale).IsRequired(true);
+            builder.Property(x => x.isDelete).HasDefaultValue(false);
             builder.Property(x => x.Address).HasMaxLength(200).IsRequired(true).HasDefaultValue("none");
         }
     }

@@ -44,6 +44,8 @@ namespace DataLayer.Entities
         public int WeekScore { get; set; }
         public int MonthScore { get; set; }
         public int YearScore { get; set; }
+
+        public bool isDelete { get; set; }
     }
 
     public class BookConfiguration : IEntityTypeConfiguration<Book>
@@ -61,6 +63,7 @@ namespace DataLayer.Entities
             builder.Property(x => x.WeekScore).HasDefaultValue(0);
             builder.Property(x => x.MonthScore).HasDefaultValue(0);
             builder.Property(x => x.YearScore).HasDefaultValue(0);
+            builder.Property(x => x.isDelete).HasDefaultValue(false);
         }
     }
 }
