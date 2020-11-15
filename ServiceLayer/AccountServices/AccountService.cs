@@ -20,7 +20,6 @@ namespace ServiceLayer.AccountServices
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly RoleManager<Role> roleManager;
         private readonly IConfiguration config;
         private readonly EShopDbContext eShopDbContext;
 
@@ -28,11 +27,10 @@ namespace ServiceLayer.AccountServices
         {
         }
 
-        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager, IConfiguration config, EShopDbContext eShopDbContext)
+        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration config, EShopDbContext eShopDbContext)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.roleManager = roleManager;
             this.eShopDbContext = eShopDbContext;
             this.config = config;
         }
@@ -48,9 +46,14 @@ namespace ServiceLayer.AccountServices
             var user = await userManager.FindByNameAsync(loginRequest.username);
             //sqlite
             //var user = userManager.Users.FirstOrDefault(user => user.UserName == loginRequest.Username);
-            if (user == null) return new ApiResult<object>(success: false, messge: "Mật khẩu hoặc tài khoản không đúng", payload: null);
+            if (user == null) 
+                return new ApiResult<object>(success: false, messge: "Mật khẩu hoặc tài khoản không đúng", payload: null);
+
+            if (user.isDelete == true) 
+                return new ApiResult<object>(success: false, messge: "Tài khoản đã bị xóa vui lòng liên hệ quản trị viên để mở lại", payload: null);
 
             var result = await signInManager.PasswordSignInAsync(user, loginRequest.password, loginRequest.remember, true);
+
             if (!result.Succeeded)
                 return new ApiResult<object>(success: false, messge: "Mật khẩu hoặc tài khoản không đúng", payload: null);
 

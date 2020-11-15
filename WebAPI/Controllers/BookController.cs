@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ModelAndRequest.API;
 using ModelAndRequest.Book;
 using ServiceLayer.BookServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -32,9 +27,10 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("/api/book/query")]
-        public async Task<IActionResult> GetBookPagging(int page = 1, int size = 10, string orderBy = "Price", bool dsc = false, int? categoryId = null, string search = null)
+        public async Task<IActionResult> GetBookPagging(int page = 1, int size = 10, string orderBy = "Price", bool dsc = false, int? categoryId = null, string search = null, bool? isSuspend = null)
+        
         {
-            var result = await bookService.GetBook(page, size, orderBy, dsc, categoryId, search);
+            var result = await bookService.GetBook(page, size, orderBy, dsc, categoryId, search, isSuspend);
             return Ok(result);
         }
 
@@ -51,6 +47,7 @@ namespace WebAPI.Controllers
         [Route("/api/admin/book")]
         public async Task<IActionResult> AddBook([FromBody] BookRequest bookRequest)
         {
+            var a = ModelState.ErrorCount;
             var result = await bookService.AddBook(bookRequest);
             return Ok(result);
         }
@@ -58,9 +55,9 @@ namespace WebAPI.Controllers
         [HttpPost]
         [Authorize(policy: "Admin")]
         [Route("/api/admin/book/{id}")]
-        public async Task<IActionResult> UpdateBook([FromBody] BookRequest bookRequest)
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] BookRequest bookRequest)
         {
-            var result = await bookService.GetBookById(4);
+            var result = await bookService.EditBook(id, bookRequest);
             return Ok(result);
         }
 
@@ -73,6 +70,15 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("/api/admin/book/top/{option}")]
+        public async Task<IActionResult> RatingBook(string option, int page, int size)
+        {
+            var result = await bookService.GetBook(page: page, size: size, orderBy: option + "Score", dsc: true);
+            return Ok(result);
+        }
+
+
         //test api
         [HttpPost]
         [Route("/api/admin/book/test")]
@@ -84,11 +90,10 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("/api/admin/book/test/{id}")]
-        public async Task<IActionResult> UpdateBookTest([FromForm] BookRequest bookRequest)
+        public async Task<IActionResult> UpdateBookTest(int id, [FromForm] BookRequest bookRequest)
         {
-            var result = await bookService.GetBookById(4);
+            var result = await bookService.EditBook(id, bookRequest);
             return Ok(result);
         }
-
     }
 }

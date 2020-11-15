@@ -15,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using ModelAndRequest.Account;
 using ServiceLayer.AccountServices;
 using ServiceLayer.BookServices;
+using ServiceLayer.CategoryServices;
 using System.Collections.Generic;
 
 namespace WebAPI
@@ -41,6 +42,7 @@ namespace WebAPI
                 option.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
+                //.UseSqlServer(Configuration.GetConnectionString("eshopSqlServerAzure"))
             );
 
             //sqlite
@@ -144,7 +146,8 @@ namespace WebAPI
 
             //dependency injection
             services.AddScoped<IAccountService, AccountService>();
-            services.AddTransient<IBookService, BookService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

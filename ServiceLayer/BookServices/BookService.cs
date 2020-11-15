@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Linq.Dynamic.Core;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 
@@ -34,13 +32,13 @@ namespace ServiceLayer.BookServices
             if (bookRequest.image == null)
                 return new ApiResult<bool>(false, "Khong tim thay anh", false);
 
-            var extension =  Path.GetExtension(bookRequest.image.FileName);
-            if (extension != ".jpg" && extension != ".png" )
+            var extension = Path.GetExtension(bookRequest.image.FileName);
+            if (extension != ".jpg" && extension != ".png")
                 return new ApiResult<bool>(false, "vui long chon anh co dinh dang jpg hoac png", false);
 
             var webRootPath = env.WebRootPath;
             var fileName = "Book" + Guid.NewGuid().ToString() + bookRequest.image.FileName;
-            var filePath = Path.Combine(webRootPath, "BookImages", fileName );
+            var filePath = Path.Combine(webRootPath, "BookImages", fileName);
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 bookRequest.image.CopyTo(fileStream);
@@ -51,7 +49,7 @@ namespace ServiceLayer.BookServices
                 CategoryId = bookRequest.categoryId,
                 Available = bookRequest.available,
                 Description = bookRequest.descripton,
-                KeyWord = bookRequest.keyWord,
+                KeyWord = bookRequest.keyword,
                 Price = bookRequest.price,
                 Sale = bookRequest.sale,
                 BookImage = "BookImages/" + fileName,
@@ -65,29 +63,70 @@ namespace ServiceLayer.BookServices
         {
             var book = await eShopDb.Books.FindAsync(id);
             if (book == null)
-                return new ApiResult<bool>(false, $"Khong tim thay sach co id : {id}", false);
+                return new ApiResult<bool>(false, $"Không tìm thấy cuốn sách có id : {id}", false);
 
-            eShopDb.Books.Remove(book);
+            book.isDelete = true;
             var result = await eShopDb.SaveChangesAsync();
-            if(result < 1) 
-                return new ApiResult<bool>(false, "Xoa khong thanh cong", false);
+            if (result < 1)
+                return new ApiResult<bool>(false, "Xóa không thành công", false);
 
-            return new ApiResult<bool>(true, "Thanh cong", true);
+            return new ApiResult<bool>(true, "Xóa thành công", true);
         }
 
-        public bool EditBook(BookRequest bookRequest)
+        public async Task<ApiResult<bool>> EditBook(int id, BookRequest bookRequest)
         {
-            throw new NotImplementedException();
+            var book = await eShopDb.Books.FindAsync(id);
+
+            if (book == null)
+                return new ApiResult<bool>(false, $"Không tìm thấy cuốn sách có id : {id}", false);
+
+            book.Name = bookRequest.name;
+            book.Available = bookRequest.available;
+            book.Description = bookRequest.descripton;
+            book.CategoryId = bookRequest.categoryId;
+            book.Description = bookRequest.descripton;
+            book.Price = bookRequest.price;
+            book.Sale = bookRequest.sale;
+
+
+            if (bookRequest.image != null)
+            {
+                var extension = Path.GetExtension(bookRequest.image.FileName);
+                if (extension == ".jpg" || extension == ".png")
+                {
+                    var webRootPath = env.WebRootPath;
+                    var fileName = book.BookImage;
+                    var filePath = Path.Combine(webRootPath, fileName);
+                    try
+                    {
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            bookRequest.image.CopyTo(fileStream);
+                        }
+                    }
+                    catch
+                    {
+                        return new ApiResult<bool>(false, "Không thành công", false);
+                    }
+                }
+                else
+                    return new ApiResult<bool>(false, "vui long chon anh co dinh dang jpg hoac png", false);
+            }
+
+            await eShopDb.SaveChangesAsync();
+            return new ApiResult<bool>(true, "Thành công", true);
+
         }
 
         public async Task<ApiResult<object>> GetAll()
         {
             var data = from book in eShopDb.Books
                        join category in eShopDb.Categories on book.CategoryId equals category.Id
+                       where book.isDelete == false
                        select new { book, category = category.Name };
 
             if (data == null)
-                return new ApiResult<object>(success: false, messge: "Khong tim thay sach", payload: null);
+                return new ApiResult<object>(success: false, messge: "Không tìm thấy sách", payload: null);
 
             int total = data.Count();
 
@@ -104,23 +143,41 @@ namespace ServiceLayer.BookServices
                 sale = x.book.Sale,
             }).ToListAsync();
 
-            return new ApiResult<object>(success: true, messge: "Thanh cong", payload: new { total, books });
+            return new ApiResult<object>(success: true, messge: "Thành công", payload: new { total, books });
 
         }
 
-        /// note : them keyword cho book
-        public async Task<ApiResult<object>> GetBook(int page = 1, int size = 10, string orderBy = "Price", bool dsc = false, int? categoryId = null, string search = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page">trang can lay</param>
+        /// <param name="size">so luong tren moi trang</param>
+        /// <param name="orderBy">sap xep theo xxx vd: name</param>
+        /// <param name="dsc">giam dan = true</param>
+        /// <param name="categoryId">danh muc</param>
+        /// <param name="search">tu khoa tim kiem</param>
+        /// <param name="isSuspend">het hang hay con hang</param>
+        /// <returns></returns>
+        public async Task<ApiResult<object>> GetBook(int page = 1, int size = 10, string orderBy = "Price", bool dsc = false, int? categoryId = null, string search = null, bool? isSuspend = null)
         {
             var data = from book in eShopDb.Books
                        join category in eShopDb.Categories on book.CategoryId equals category.Id
+                       where book.isDelete == false
                        select new { book, category = category.Name };
+
             if (data == null || data.Count() == 0)
-                return new ApiResult<object>(success: false, messge: "Khong tim thay sach", payload: null);
+                return new ApiResult<object>(success: false, messge: "Không tìm thấy sách", payload: null);
+
+            if (isSuspend != null)
+                data = isSuspend == true ? data.Where(x => x.book.Available <= 0) : data.Where(x => x.book.Available > 0);
 
             if (categoryId != null)
+            {
                 data = data.Where(x => x.book.CategoryId == categoryId);
-            if (data == null || data.Count() == 0)
-                return new ApiResult<object>(success: false, messge: "Khong tim thay sach trong danh muc nay", payload: null);
+                if (data == null || data.Count() == 0)
+                    return new ApiResult<object>(success: false, messge: "Không tìm thấy sách trong danh mục này", payload: null);
+            }
+
 
             if (search != null)
             {
@@ -131,9 +188,10 @@ namespace ServiceLayer.BookServices
                                     x.book.Name.ToUpper().Contains(searchKey) ||
                                     x.book.Description.Contains(search) ||
                                     x.book.KeyWord.ToUpper().Contains(searchKey));
+
+                if (data == null || data.Count() == 0)
+                    return new ApiResult<object>(success: false, messge: $"Không tồn tại sách chứa từ khóa {search}", payload: null);
             }
-            if (data == null || data.Count() == 0)
-                return new ApiResult<object>(success: false, messge: $"Khong tim thay sach phu hop voi tu khoa {search}", payload: null);
 
             int totalPage = (int)Math.Ceiling((decimal)data.Count() / size);
             data = data.AsQueryable().OrderBy($"book.{orderBy} {(dsc ? "descending" : "")}").Skip((page - 1) * size).Take(size);
@@ -151,14 +209,18 @@ namespace ServiceLayer.BookServices
                 sale = x.book.Sale
             }).ToListAsync();
 
-            return new ApiResult<object>(success: true, messge: $"Thanh cong! Tim thay {data.Count()} cuon sach", payload: new { totalPage, books });
+            return new ApiResult<object>(success: true, messge: $"Thành công! Tìm thấy {data.Count()} sách", payload: new { totalPage, books });
         }
 
         public async Task<ApiResult<object>> GetBookById(int id)
         {
             var book = await eShopDb.Books.FindAsync(id);
+
             if (book == null)
-                return new ApiResult<object>(success: false, messge: "Khong tim thay sach", payload: null);
+                return new ApiResult<object>(success: false, messge: "Không tìm thấy sách", payload: null);
+
+            if (book.isDelete == true)
+                return new ApiResult<object>(success: false, messge: "Sách đã bị xóa", payload: null);
 
             var baseUrl = configuration.GetSection("baseUrl").Value;
 
@@ -171,12 +233,14 @@ namespace ServiceLayer.BookServices
                 available = book.Available,
                 price = book.Price,
                 sale = book.Sale,
+                //kiểm tra hình ảnh là link hay url
                 image = book.BookImage.Contains("http") ? book.BookImage : baseUrl + book.BookImage,
                 description = book.Description,
                 keyWord = book.KeyWord
             };
 
-            return new ApiResult<object>(success: true, messge: "Thanh cong", payload: new { book = result });
+            return new ApiResult<object>(success: true, messge: "Thành công", payload: new { book = result });
         }
+
     }
 }

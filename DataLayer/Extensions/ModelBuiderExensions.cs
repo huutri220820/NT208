@@ -11,12 +11,12 @@ namespace DataLayer.Extensions
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category() { Id = 1, Name = "Văn học" , KeyWord= "vanhoc, van hoc" },
-                new Category() { Id = 2, Name = "Kinh tế" , KeyWord = "kinhte, kinh te" },
+                new Category() { Id = 1, Name = "Văn học", KeyWord = "vanhoc, van hoc" },
+                new Category() { Id = 2, Name = "Kinh tế", KeyWord = "kinhte, kinh te" },
                 new Category() { Id = 3, Name = "Thiếu nhi", KeyWord = "thieunhi, thieu nhi" },
                 new Category() { Id = 4, Name = "Ngoại ngữ", KeyWord = "ngoaingu, ngoai ngu" },
-                new Category() { Id = 5, Name = "Khoa học kĩ thuật", KeyWord= "khoa hoc ki thuat, khoa hoc ky thuat, Khoa học kỹ thuật" },
-                new Category() { Id = 6, Name = "Lịch sử - Địa lý - Tôn giáo", KeyWord="lich su, dia li, dia ly, ton giao" },
+                new Category() { Id = 5, Name = "Khoa học kĩ thuật", KeyWord = "khoa hoc ki thuat, khoa hoc ky thuat, Khoa học kỹ thuật" },
+                new Category() { Id = 6, Name = "Lịch sử - Địa lý - Tôn giáo", KeyWord = "lich su, dia li, dia ly, ton giao" },
                 new Category() { Id = 7, Name = "Khoa học kĩ thuật", KeyWord = "khoa hoc, khoa hoc ki thuat, ki thuat" },
                 new Category() { Id = 8, Name = "Khác" }
                 );
@@ -24,8 +24,8 @@ namespace DataLayer.Extensions
             var description = Lorem.BookDescription;
 
             modelBuilder.Entity<Book>().HasData(
-                new Book() { Id = 1, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", WeekScore = 10 },
-                new Book() { Id = 2, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", MonthScore = 10 },
+                new Book() { Id = 1, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 0, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", WeekScore = 10 },
+                new Book() { Id = 2, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 0, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", MonthScore = 10 },
                 new Book() { Id = 3, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", YearScore = 10 },
                 new Book() { Id = 4, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
                 new Book() { Id = 5, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
