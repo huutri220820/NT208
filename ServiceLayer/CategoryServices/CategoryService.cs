@@ -72,7 +72,7 @@ namespace ServiceLayer.CategoryServices
 
         public async Task<ApiResult<object>> GetAllCategory()
         {
-            var result = await eShopDbContext.Categories?.Select(x => new CategoryModel()
+            var result = await eShopDbContext.Categories?.Select(x => new CategoryViewModel()
             {
                 id = x.Id,
                 name = x.Name

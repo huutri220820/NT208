@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [Route("/api/category/{id}")]
+        [Route("/api/category/update/{id}")]
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [FromBody] CategoryRequest categoryRequest)
         {

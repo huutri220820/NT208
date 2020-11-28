@@ -15,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using ModelAndRequest.Account;
 using ServiceLayer.AccountServices;
 using ServiceLayer.BookServices;
+using ServiceLayer.CartService;
 using ServiceLayer.CategoryServices;
 using System.Collections.Generic;
 
@@ -148,6 +149,7 @@ namespace WebAPI
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICartService, CartService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
