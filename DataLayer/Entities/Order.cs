@@ -27,14 +27,14 @@ namespace DataLayer.Entities
         public DateTime DateCreate { get; set; }
         public DateTime? DateModify { get; set; }
         public DateTime? DateReceive { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public OrderStatus OrderStatus { get; set; } 
         private List<OrderDetail> orderDetails;
         public virtual List<OrderDetail> OrderDetails
         {
             get => this.lazyLoader.Load(this, ref this.orderDetails);
             set => this.orderDetails = value;
         }
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; } 
 
         public bool isDelete { get; set; }
     }

@@ -66,21 +66,10 @@ namespace ServiceLayer.AccountServices
                 new Claim(ClaimTypes.Name, loginRequest.username)
             };
             var roleResult = "user";
-
             roleResult = roles.Contains("Administrator") ? "admin" : roleResult;
             roleResult = roles.Contains("Sales") ? "sales" : roleResult;
 
-            // ma hoa doi xung
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            //tao token
-            var token = new JwtSecurityToken(config["Tokens:Issuer"], config["Tokens:Issuer"],
-                claims,
-                expires: DateTime.Now.AddHours(3),
-                signingCredentials: creds);
-
-            var tokenResult = new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenResult = await GenerateToken(user);
             return new ApiResult<object>(success: true, messge: "Đăng nhập thành công", payload: new { token = tokenResult, role = roleResult, id = user.Id });
         }
 
@@ -109,8 +98,11 @@ namespace ServiceLayer.AccountServices
                 FullName = registerRequest.fullName,
                 PhoneNumber = registerRequest.phonenumber,
                 SecurityStamp = string.Empty,
-                EmailConfirmed = true
+                EmailConfirmed = true,
             };
+
+            if (!isSale)
+                user.isUser = true;
 
 
             var result = await userManager.CreateAsync(user, registerRequest.password);
@@ -245,6 +237,56 @@ namespace ServiceLayer.AccountServices
 
             return new ApiResult<bool>(success: false, messge: "Xóa thành công", payload: true);
         }
-     
+
+        public async Task<string> GenerateToken(User user)
+        {
+            //tao claims chua thong tin de luu vao payload cua token
+            var roles = await userManager.GetRolesAsync(user);
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Email,user.Email),
+                new Claim(ClaimTypes.Role, string.Join(";",roles)),
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
+
+            // ma hoa doi xung
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            //tao token
+            var token = new JwtSecurityToken(config["Tokens:Issuer"], config["Tokens:Issuer"],
+                claims,
+                expires: DateTime.Now.AddHours(3),
+                signingCredentials: creds);
+
+            var tokenResult = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return tokenResult;
+        }
+
+        public bool VerifyToken(string Token)
+        {
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenVlalidatorParameter = GetValidationParameters();
+
+            SecurityToken validatedToken;
+            var principal = tokenHandler.ValidateToken(Token, tokenVlalidatorParameter, out validatedToken);
+            return true;
+        }
+
+        private TokenValidationParameters GetValidationParameters()
+        {
+            return new TokenValidationParameters()
+            {
+                ValidateLifetime = false, // Because there is no expiration in the generated token
+                ValidateAudience = false, // Because there is no audiance in the generated token
+                ValidateIssuer = false,   // Because there is no issuer in the generated token
+                ValidIssuer = config["Tokens:Issuer"],
+                ValidAudience = config["Tokens:Issuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"])) // The same key as the one that generate the token
+            };
+        }
+
     }
 }

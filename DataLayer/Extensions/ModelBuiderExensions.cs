@@ -131,7 +131,8 @@ namespace DataLayer.Extensions
                     EmailConfirmed = true,
                     Dob = DateTime.Now,
                     PhoneNumber = "0123456787",
-                    IsMale = true
+                    IsMale = true,
+                    isUser = true
                 }
                 );
 

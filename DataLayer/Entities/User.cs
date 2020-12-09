@@ -64,6 +64,7 @@ namespace DataLayer.Entities
             set => this.blogs = value;
         }
 
+        public bool isUser { get; set; }
         public bool isDelete { get; set; }
     }
 
@@ -84,6 +85,7 @@ namespace DataLayer.Entities
             builder.Property(x => x.IsMale).IsRequired(true);
             builder.Property(x => x.isDelete).HasDefaultValue(false);
             builder.Property(x => x.Address).HasMaxLength(200).IsRequired(true).HasDefaultValue("none");
+            builder.Property(x => x.isUser).HasDefaultValue(false);
         }
     }
 }

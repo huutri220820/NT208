@@ -15,4 +15,3 @@ namespace ServiceLayer.CartService
         Task<ApiResult<bool>> Clear(Guid userId);
     }
 }
-  

@@ -21,9 +21,9 @@ namespace ServiceLayer.CartService
         public async Task<ApiResult<bool>> Clear(Guid userId)
         {
             eShopDbContext.Users.Find(userId)?.CartItems.Clear();
-            var result =  await eShopDbContext.SaveChangesAsync();
+            var result = await eShopDbContext.SaveChangesAsync();
 
-            if(result > 0)
+            if (result > 0)
                 return new ApiResult<bool>(success: true, messge: "Xoa thanh cong", payload: false);
             return new ApiResult<bool>(success: false, messge: "Xoa Khong thanh cong", payload: true);
         }
@@ -31,7 +31,7 @@ namespace ServiceLayer.CartService
         public async Task<ApiResult<bool>> Delete(Guid userId, int bookId)
         {
             var temp = eShopDbContext.CartItems.Find(userId, bookId);
-            if(temp == null)
+            if (temp == null)
                 return new ApiResult<bool>(success: false, messge: "Khong tim thay", payload: false);
 
             eShopDbContext.CartItems.Remove(temp);
@@ -71,10 +71,10 @@ namespace ServiceLayer.CartService
                 var result = data?.Select(x =>
                     new CartViewModel()
                     {
-                        userId = x.user.Id,
                         bookId = x.book.Id,
                         bookName = x.book.Name,
                         price = x.book.Price,
+                        sale = x.book.Sale,
                         bookImage = x.book.BookImage,
                         quantity = x.quantity
                     }

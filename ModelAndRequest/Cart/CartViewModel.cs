@@ -8,11 +8,11 @@ namespace ModelAndRequest.Cart
 {
     public class CartViewModel
     {
-        public Guid userId { get; set; }
         public int bookId { get; set; }
         public string bookName { get; set; }
         public string bookImage { get; set; }
         public decimal price { get; set; }
+        public decimal sale { get; set; }
         public int quantity { get; set; }
     }
 }

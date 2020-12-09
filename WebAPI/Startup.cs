@@ -17,6 +17,8 @@ using ServiceLayer.AccountServices;
 using ServiceLayer.BookServices;
 using ServiceLayer.CartService;
 using ServiceLayer.CategoryServices;
+using ServiceLayer.OrderServices;
+using ServiceLayer.SummaryService;
 using System.Collections.Generic;
 
 namespace WebAPI
@@ -150,6 +152,8 @@ namespace WebAPI
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ISummaryService, SummaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

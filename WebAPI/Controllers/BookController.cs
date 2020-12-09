@@ -47,7 +47,6 @@ namespace WebAPI.Controllers
         [Route("/api/admin/book")]
         public async Task<IActionResult> AddBook([FromBody] BookRequest bookRequest)
         {
-            var a = ModelState.ErrorCount;
             var result = await bookService.AddBook(bookRequest);
             return Ok(result);
         }

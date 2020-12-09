@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\BookImages\" />
+    <Folder Include="wwwroot\Banner\" />
+    <Folder Include="wwwroot\Avatars\" />
   </ItemGroup>
 
 
