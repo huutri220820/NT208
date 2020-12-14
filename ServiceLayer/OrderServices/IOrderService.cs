@@ -9,7 +9,6 @@ namespace ServiceLayer.OrderServices
 {
     public interface IOrderService
     {
-
         //truyen vao userId, sau do lay cac san pham nam trong gio hang cua User nay va tien hanh tao don hang
         ApiResult<object> CreateOrder(ListCartRequest ListCartRequest);
         Task<ApiResult<bool>> AddOrder(ListCartRequest ListCartRequest, OrderRequest OrderRequest);

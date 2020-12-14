@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ModelAndRequest.API;
 using ModelAndRequest.Book;
+using ModelAndRequest.Rating;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -186,7 +187,7 @@ namespace ServiceLayer.BookServices
                 data = data.Where(x => x.category.ToUpper().Contains(searchKey) ||
                                     x.book.Category.KeyWord.ToUpper().Contains(searchKey) ||
                                     x.book.Name.ToUpper().Contains(searchKey) ||
-                                    x.book.Description.Contains(search) ||
+                                    //x.book.Description.Contains(search) ||
                                     x.book.KeyWord.ToUpper().Contains(searchKey));
 
                 if (data == null || data.Count() == 0)
@@ -236,7 +237,15 @@ namespace ServiceLayer.BookServices
                 //kiểm tra hình ảnh là link hay url
                 image = book.BookImage.Contains("http") ? book.BookImage : baseUrl + book.BookImage,
                 description = book.Description,
-                keyWord = book.KeyWord
+                keyWord = book.KeyWord,
+                comments = book.BookRatings.Select(x => new RatingViewModel() { 
+                    id = x.Id,
+                    userId = x.UserId,
+                    username = x.User.FullName,
+                    comment = x.Comment,
+                    rating = x.Rating,
+                    avatar = x.User.Avatar.Contains("http") ? x.User.Avatar : baseUrl + x.User.Avatar
+                }).ToList<RatingViewModel>(),
             };
 
             return new ApiResult<object>(success: true, messge: "Thành công", payload: new { book = result });

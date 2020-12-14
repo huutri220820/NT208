@@ -35,8 +35,6 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-       
-
         [HttpPost]
         public IActionResult create([FromBody] ListCartRequest listCartRequest)
         {

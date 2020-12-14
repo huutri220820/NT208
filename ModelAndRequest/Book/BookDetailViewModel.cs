@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelAndRequest.Rating;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ModelAndRequest.Book
 {
-    public class BookDetailViewModel 
+    public class BookDetailViewModel
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -19,5 +20,6 @@ namespace ModelAndRequest.Book
         public string image { get; set; }
         public string keyWord { get; set; }
         public string description { get; set; }
+        public List<RatingViewModel> comments { get; set; }
     }
 }

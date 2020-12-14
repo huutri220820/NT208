@@ -37,6 +37,11 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
             services.AddControllers();
 
             //connect database, lazy load
@@ -172,7 +177,7 @@ namespace WebAPI
             //app.UseCors(MyAllowSpecificOrigins);
 
             app.UseCors(builder =>
-                    builder.WithOrigins("*")
+                    builder.AllowAnyOrigin()
                             .AllowAnyHeader()
                             .AllowAnyMethod());
 
