@@ -8,12 +8,9 @@ ModelAndRequest : Tầng model trong mô hình MVC. Tách ra để sử dụng c
 
 ServiceLayer: Chứa các lớp thực thi các chức năng nhất định
 
-WebApplication: Website 
-
-
 
 ##### run 
 
-nhấp chuột phải vào WebApplication --> chọn Set as Startup project
+nhấp chuột phải vào WebAPI --> chọn Set as Startup project
 
 Khởi động sqlserver --> run 
