@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Book;
 using ServiceLayer.BookServices;
@@ -71,27 +72,17 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("/api/admin/book/top/{option}")]
-        public async Task<IActionResult> RatingBook(string option, int page, int size)
+        public async Task<IActionResult> RatingBook(string option, int page = 1, int size = 6)
         {
             var result = await bookService.GetBook(page: page, size: size, orderBy: option + "Score", dsc: true);
             return Ok(result);
         }
 
-
-        //test api
         [HttpPost]
-        [Route("/api/admin/book/test")]
-        public async Task<IActionResult> AddBookTest([FromForm] BookRequest bookRequest)
+        [Route("/api/image")]
+        public IActionResult PostImage(IFormFile image)
         {
-            var result = await bookService.AddBook(bookRequest);
-            return Ok(result);
-        }
-
-        [HttpPost]
-        [Route("/api/admin/book/test/{id}")]
-        public async Task<IActionResult> UpdateBookTest(int id, [FromForm] BookRequest bookRequest)
-        {
-            var result = await bookService.EditBook(id, bookRequest);
+            var result = bookService.TestImage(image);
             return Ok(result);
         }
     }

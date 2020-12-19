@@ -24,16 +24,16 @@ namespace DataLayer.Extensions
             var description = Lorem.BookDescription;
 
             modelBuilder.Entity<Book>().HasData(
-                new Book() { Id = 1, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 0, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", WeekScore = 10 },
-                new Book() { Id = 2, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 0, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", MonthScore = 10 },
-                new Book() { Id = 3, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", YearScore = 10 },
-                new Book() { Id = 4, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
-                new Book() { Id = 5, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
-                new Book() { Id = 6, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
-                new Book() { Id = 7, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
-                new Book() { Id = 8, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
-                new Book() { Id = 9, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description },
-                new Book() { Id = 10, Name = "Mặt Trời Lúc Nửa Đêm", Price = 10000, Available = 10, CategoryId = 1, Description = description }
+                new Book() { Id = 1, Name = "Mặt Trời Lúc Nửa Đêm",Author = "Eren Yeager", Price = 10000, Available = 0, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", WeekScore = 10 },
+                new Book() { Id = 2, Name = "Mặt Trời Lúc Nửa Đêm", Author = "Eren Yeager", Price = 10000, Available = 0, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", MonthScore = 10 },
+                new Book() { Id = 3, Name = "Mặt Trời Lúc Nửa Đêm",Author = "Eren Yeager", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe", YearScore = 10 },
+                new Book() { Id = 4, Name = "Mặt Trời Lúc Nửa Đêm",Author = "Eren Yeager", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
+                new Book() { Id = 5, Name = "Mặt Trời Lúc Nửa Đêm",Author = "Eren Yeager", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
+                new Book() { Id = 6, Name = "Mặt Trời Lúc Nửa Đêm",Author = "Eren Yeager", Price = 10000, Available = 10, CategoryId = 1, Description = description, KeyWord = "SachHay, SachRe" },
+                new Book() { Id = 7, Name = "Mặt Trời Lúc Nửa Đêm",Author = "Eren Yeager", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Book() { Id = 8, Name = "Mặt Trời Lúc Nửa Đêm",Author = "Eren Yeager", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Book() { Id = 9, Name = "Mặt Trời Lúc Nửa Đêm", Author = "Eren Yeager", Price = 10000, Available = 10, CategoryId = 1, Description = description },
+                new Book() { Id = 10, Name = "Mặt Trời Lúc Nửa Đêm", Author = "Eren Yeager", Price = 10000, Available = 10, CategoryId = 1, Description = description }
                 );
 
             //tai khoan admin

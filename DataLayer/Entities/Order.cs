@@ -27,6 +27,7 @@ namespace DataLayer.Entities
         public DateTime DateCreate { get; set; }
         public DateTime? DateModify { get; set; }
         public DateTime? DateReceive { get; set; }
+        public DateTime? DateReturn { get; set; }
         public OrderStatus OrderStatus { get; set; } 
         private List<OrderDetail> orderDetails;
         public virtual List<OrderDetail> OrderDetails

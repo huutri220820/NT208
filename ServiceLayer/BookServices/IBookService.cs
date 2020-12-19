@@ -1,4 +1,5 @@
-﻿using ModelAndRequest.API;
+﻿using Microsoft.AspNetCore.Http;
+using ModelAndRequest.API;
 using ModelAndRequest.Book;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,6 @@ namespace ServiceLayer.BookServices
         Task<ApiResult<bool>> AddBook(BookRequest bookRequest);
         Task<ApiResult<bool>> EditBook(int id, BookRequest bookRequest);
         Task<ApiResult<bool>> DeleteBook(int id);
+        bool TestImage(IFormFile image);
     }
 }

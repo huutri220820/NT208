@@ -37,12 +37,12 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddControllers().AddNewtonsoftJson();
+
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
             });
-
-            services.AddControllers();
 
             //connect database, lazy load
             //sqlserver
@@ -154,7 +154,8 @@ namespace WebAPI
 
             //dependency injection
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IBookService, BookService>();
+            //services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookService, BookService_V2>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IOrderService, OrderService>();
