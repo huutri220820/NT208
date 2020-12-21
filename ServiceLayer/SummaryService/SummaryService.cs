@@ -1,8 +1,9 @@
-﻿using DataLayer.EF;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.EF;
+using Microsoft.EntityFrameworkCore;
 using ModelAndRequest.API;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace ServiceLayer.SummaryService
 {
@@ -14,6 +15,7 @@ namespace ServiceLayer.SummaryService
         {
             this.eShopDbContext = eShopDbContext;
         }
+
         public async Task<ApiResult<object>> Get()
         {
             var userCount = await eShopDbContext.Users.Where(x => x.isUser == true).CountAsync();
@@ -21,7 +23,7 @@ namespace ServiceLayer.SummaryService
             var newOrderCount = await eShopDbContext.Orders.Where(x => x.OrderStatus == DataLayer.Enums.OrderStatus.DA_DAT_HANG).CountAsync();
             var productCount = await eShopDbContext.Books.CountAsync();
 
-            return new ApiResult<object>(success: true, messge: "Thanh cong", new {user = userCount, order = orderCount, newOrder = newOrderCount, product = productCount });
+            return new ApiResult<object>(success: true, messge: "Thanh cong", new { user = userCount, order = orderCount, newOrder = newOrderCount, product = productCount });
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using DataLayer.Enums;
+﻿//Vo Huu Tri - 18521531 UIT
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Cart;
@@ -53,7 +53,6 @@ namespace WebAPI.Controllers
             var result = await orderService.UpdateOrder(orderId, orderRequest);
             return Ok(result);
         }
-        
 
         [HttpGet]
         [Authorize(policy: "Sales")]
@@ -63,6 +62,5 @@ namespace WebAPI.Controllers
             var result = await orderService.GetAllOrders();
             return Ok(result);
         }
-
     }
 }

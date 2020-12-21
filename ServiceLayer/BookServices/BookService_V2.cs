@@ -1,4 +1,5 @@
-﻿using DataLayer.EF;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.EF;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,22 +7,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ModelAndRequest.API;
 using ModelAndRequest.Book;
+using ModelAndRequest.Rating;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using ModelAndRequest.Rating;
+using System.Threading.Tasks;
 
 namespace ServiceLayer.BookServices
 {
     public class BookService_V2 : IBookService
     {
-
         private readonly EShopDbContext eShopDb;
         private readonly IWebHostEnvironment env;
         private IConfiguration configuration;
+
         public BookService_V2(EShopDbContext eShopDb, IWebHostEnvironment env, IConfiguration configuration)
         {
             this.eShopDb = eShopDb;
@@ -50,7 +50,7 @@ namespace ServiceLayer.BookServices
             eShopDb.Books.Add(book);
             var result = await eShopDb.SaveChangesAsync();
 
-            if(result > 0)
+            if (result > 0)
                 return new ApiResult<bool>(true, "Them thanh cong", true);
             return new ApiResult<bool>(false, "Khong thanh cong", false);
         }
@@ -88,8 +88,8 @@ namespace ServiceLayer.BookServices
             if (!String.IsNullOrEmpty(bookRequest.imageBase64))
                 book.BookImage = bookRequest.imageBase64;
 
-            var result =  await eShopDb.SaveChangesAsync();
-            if(result > 0)
+            var result = await eShopDb.SaveChangesAsync();
+            if (result > 0)
                 return new ApiResult<bool>(true, "Thành công", true);
             return new ApiResult<bool>(false, "Không Thành công", false);
         }
@@ -121,13 +121,11 @@ namespace ServiceLayer.BookServices
             }).ToListAsync();
 
             return new ApiResult<object>(success: true, messge: "Thành công", payload: new { total, books });
-
         }
 
         public async Task<ApiResult<object>> GetBook(int page = 1, int size = 10, string orderBy = "Price", bool dsc = false, int? categoryId = null, string search = null, bool? isSuspend = null)
         {
             var data = eShopDb.Books.Include(x => x.Category).Include(x => x.BookRatings).Where(x => x.isDelete == false);
-
 
             if (data == null || data.Count() == 0)
                 return new ApiResult<object>(success: false, messge: "Không tìm thấy sách", payload: null);
@@ -135,14 +133,12 @@ namespace ServiceLayer.BookServices
             if (isSuspend != null)
                 data = isSuspend == true ? data.Where(x => x.Available <= 0) : data.Where(x => x.Available > 0);
 
-
             if (categoryId != null)
             {
                 data = data.Where(x => x.CategoryId == categoryId);
                 if (data == null || data.Count() == 0)
                     return new ApiResult<object>(success: false, messge: "Không tìm thấy sách trong danh mục này", payload: null);
             }
-
 
             if (search != null)
             {
@@ -165,7 +161,6 @@ namespace ServiceLayer.BookServices
             //var ab = data.Where(x=>x.book.Id == 4).First().book.BookRatings.Count();
             //var ac = data.Where(x=>x.book.Id == 4).First().book.BookRatings.Sum(x=>x.Rating);
 
-
             var books = await data.Select(x => new BookViewModel()
             {
                 id = x.Id,
@@ -179,7 +174,6 @@ namespace ServiceLayer.BookServices
                 price = x.Price,
                 sale = x.Sale
             }).ToListAsync();
-
 
             return new ApiResult<object>(success: true, messge: $"Thành công! Tìm thấy {data.Count()} sách", payload: new { totalPage, books });
         }

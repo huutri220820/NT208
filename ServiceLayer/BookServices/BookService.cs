@@ -1,4 +1,5 @@
-﻿using DataLayer.EF;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.EF;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +15,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
-
 namespace ServiceLayer.BookServices
 {
     public class BookService : IBookService
@@ -22,6 +22,7 @@ namespace ServiceLayer.BookServices
         private readonly EShopDbContext eShopDb;
         private readonly IWebHostEnvironment env;
         private IConfiguration configuration;
+
         public BookService(EShopDbContext eShopDb, IWebHostEnvironment env, IConfiguration configuration)
         {
             this.eShopDb = eShopDb;
@@ -54,7 +55,7 @@ namespace ServiceLayer.BookServices
                 Description = bookRequest.descripton,
                 KeyWord = bookRequest.keyword,
                 Price = bookRequest.price,
-                Sale = bookRequest.sale??0,
+                Sale = bookRequest.sale ?? 0,
                 BookImage = "BookImages/" + fileName,
             };
             eShopDb.Books.Add(book);
@@ -92,7 +93,6 @@ namespace ServiceLayer.BookServices
             book.Price = bookRequest.price;
             book.Sale = bookRequest.sale ?? 0;
 
-
             if (bookRequest.image != null)
             {
                 var extension = Path.GetExtension(bookRequest.image.FileName);
@@ -119,7 +119,6 @@ namespace ServiceLayer.BookServices
 
             await eShopDb.SaveChangesAsync();
             return new ApiResult<bool>(true, "Thành công", true);
-
         }
 
         public async Task<ApiResult<object>> GetAll()
@@ -149,11 +148,10 @@ namespace ServiceLayer.BookServices
             }).ToListAsync();
 
             return new ApiResult<object>(success: true, messge: "Thành công", payload: new { total, books });
-
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="page">trang can lay</param>
         /// <param name="size">so luong tren moi trang</param>
@@ -182,7 +180,6 @@ namespace ServiceLayer.BookServices
                 if (data == null || data.Count() == 0)
                     return new ApiResult<object>(success: false, messge: "Không tìm thấy sách trong danh mục này", payload: null);
             }
-
 
             if (search != null)
             {
@@ -244,7 +241,8 @@ namespace ServiceLayer.BookServices
                 image = book.BookImage.Contains("http") ? book.BookImage : baseUrl + book.BookImage,
                 description = book.Description,
                 keyWord = book.KeyWord,
-                comments = book.BookRatings.Select(x => new RatingViewModel() { 
+                comments = book.BookRatings.Select(x => new RatingViewModel()
+                {
                     id = x.Id,
                     userId = x.UserId,
                     username = x.User.FullName,
@@ -271,7 +269,6 @@ namespace ServiceLayer.BookServices
                     {
                         image.CopyTo(fileStream);
                     }
-                    
                 }
             }
             return false;

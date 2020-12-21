@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//Vo Huu Tri - 18521531 UIT
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Collections.Generic;
 
@@ -10,15 +11,17 @@ namespace DataLayer.Entities
 
         public Category()
         {
-
         }
+
         public Category(ILazyLoader lazyLoader)
         {
             this.lazyLoader = lazyLoader;
         }
+
         public int Id { get; set; }
         public string Name { get; set; }
         private List<Book> books;
+
         public virtual List<Book> Books
         {
             get => this.lazyLoader.Load(this, ref this.books);

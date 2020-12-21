@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//Vo Huu Tri - 18521531 UIT
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
@@ -8,9 +9,11 @@ namespace DataLayer.Entities
     {
         //public int Id { get; set; }
         public Guid UserId { get; set; }
+
         public virtual User User { get; set; }
         public int BookId { get; set; }
         public virtual Book Book { get; set; }
+
         // so luong
         public int Quantity { get; set; }
     }
@@ -24,6 +27,5 @@ namespace DataLayer.Entities
             builder.Property(x => x.BookId).IsRequired(true);
             builder.Property(x => x.Quantity).IsRequired(true).HasDefaultValue(1);
         }
-
     }
 }

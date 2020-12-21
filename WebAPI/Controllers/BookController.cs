@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿//Vo Huu Tri - 18521531 UIT
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Book;
@@ -29,7 +30,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         [Route("/api/book/query")]
         public async Task<IActionResult> GetBookPagging(int page = 1, int size = 10, string orderBy = "Price", bool dsc = false, int? categoryId = null, string search = null, bool? isSuspend = null)
-        
+
         {
             var result = await bookService.GetBook(page, size, orderBy, dsc, categoryId, search, isSuspend);
             return Ok(result);

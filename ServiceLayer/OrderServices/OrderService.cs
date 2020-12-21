@@ -1,4 +1,5 @@
-﻿using DataLayer.EF;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.EF;
 using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using ModelAndRequest.API;
@@ -8,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 
 namespace ServiceLayer.OrderServices
 {
@@ -39,6 +39,7 @@ namespace ServiceLayer.OrderServices
                         sale = book.Sale,
                         quantity = cart.quantity > book.Available ? book.Available : cart.quantity,
                     });
+
                     totalPrice += book.Price * (1 - book.Sale) * (cart.quantity > book.Available ? book.Available : cart.quantity);
                 }
             });
@@ -48,42 +49,54 @@ namespace ServiceLayer.OrderServices
 
         public async Task<ApiResult<bool>> AddOrder(ListCartRequest ListCartRequest, OrderRequest OrderRequest)
         {
-
             decimal totalPrice = 0;
             List<OrderDetail> orderDetails = new List<OrderDetail>();
             ListCartRequest.CartRequests.ForEach(cart =>
             {
                 var book = eShopDbContext.Books.Find(cart.bookId);
-                if (book != null)
+                if (book != null && book.Available > 0)
                 {
                     var bookPrice = (book.Price - book.Price * book.Sale) * cart.quantity;
                     totalPrice += bookPrice;
                     orderDetails.Add(new OrderDetail()
                     {
                         BookId = book.Id,
-                        Quantity = cart.quantity,
+                        Quantity = cart.quantity > book.Available ? book.Available : cart.quantity,
                         TotalPrice = bookPrice,
                     });
+                    book.Available = cart.quantity > book.Available ? 0 : book.Available - cart.quantity;
+
+                    //NOTE : tinh diem pho bien
+                    book.WeekScore += 10 * cart.quantity;
+                    book.MonthScore += 10 * cart.quantity;
+                    book.YearScore += 10 * cart.quantity;
                 }
             });
 
-            var newOrder = new Order()
+            if (orderDetails.Count > 0)
             {
-                UserId = OrderRequest.UserId,
-                Address = OrderRequest.Address,
-                TotalPrice = totalPrice,
-                OrderDetails = orderDetails,
-            };
-
-            eShopDbContext.Orders.Add(newOrder);
+                var newOrder = new Order()
+                {
+                    UserId = OrderRequest.UserId,
+                    Address = OrderRequest.Address,
+                    TotalPrice = totalPrice,
+                    OrderDetails = orderDetails,
+                };
+                eShopDbContext.Orders.Add(newOrder);
+            }
 
             var dbResult = await eShopDbContext.SaveChangesAsync();
+
+            if (orderDetails.Count < 1)
+            {
+                return new ApiResult<bool>(success: false, messge: "Dat hang khong thanh cong", payload: false);
+            }
+
             if (dbResult > 0)
             {
                 return new ApiResult<bool>(success: true, messge: "Da dat hang thanh cong", payload: true);
             }
             return new ApiResult<bool>(success: false, messge: "Dat hang khong thanh cong", payload: false);
-
         }
 
         public async Task<ApiResult<List<OrderViewModel>>> GetAllOrders()
@@ -109,7 +122,6 @@ namespace ServiceLayer.OrderServices
             }).ToListAsync();
 
             return new ApiResult<List<OrderViewModel>>(success: true, messge: "Thanh cong", payload: result);
-
         }
 
         public async Task<ApiResult<List<OrderDetailViewModel>>> GetGetOrderDetail(int OrderId)
@@ -138,13 +150,12 @@ namespace ServiceLayer.OrderServices
         public async Task<ApiResult<bool>> UpdateOrder(int OrderId, OrderRequest OrderRequest)
         {
             var order = eShopDbContext.Orders.Find(OrderId);
-            if(order == null)
+            if (order == null)
                 return new ApiResult<bool>(success: false, messge: "Khong tim thay don hang", payload: false);
-
 
             order.DateReceive = OrderRequest.DateReceive ?? order.DateReceive;
             order.Address = OrderRequest.Address ?? order.Address;
-            if(OrderRequest.OrderStatus != DataLayer.Enums.OrderStatus.DA_DAT_HANG)
+            if (OrderRequest.OrderStatus != DataLayer.Enums.OrderStatus.DA_DAT_HANG)
                 order.OrderStatus = OrderRequest.OrderStatus;
 
             var result = await eShopDbContext.SaveChangesAsync();
@@ -152,7 +163,6 @@ namespace ServiceLayer.OrderServices
             if (result > 0)
                 return new ApiResult<bool>(success: true, messge: "Thanh cong", payload: true);
             return new ApiResult<bool>(success: false, messge: "Khong cap nhat", payload: false);
-
         }
 
         public Task<ApiResult<bool>> DeleteOrder(Guid UserId, int OrderId)

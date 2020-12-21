@@ -1,9 +1,6 @@
-﻿using FluentValidation;
-using System;
+﻿//Vo Huu Tri - 18521531 UIT
+using FluentValidation;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModelAndRequest.Cart
 {
@@ -11,6 +8,7 @@ namespace ModelAndRequest.Cart
     {
         public List<CartRequest> CartRequests { get; set; }
     }
+
     public class ListCartRequestValidator : AbstractValidator<ListCartRequest>
     {
         public ListCartRequestValidator()

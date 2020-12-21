@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//Vo Huu Tri - 18521531 UIT
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataLayer.Entities
@@ -10,6 +11,7 @@ namespace DataLayer.Entities
         public int BookId { get; set; }
         public virtual Book Book { get; set; }
         public int Quantity { get; set; }
+
         // totalprice = priceBook * Quantity
         public decimal TotalPrice { get; set; }
     }

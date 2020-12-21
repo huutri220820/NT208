@@ -1,4 +1,5 @@
-﻿using DataLayer.Enums;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -14,21 +15,24 @@ namespace DataLayer.Entities
 
         public User()
         {
-
         }
+
         public User(ILazyLoader lazyLoader)
         {
             this.lazyLoader = lazyLoader;
         }
+
         public string FullName { get; set; }
         public DateTime Dob { get; set; }
         public string Avatar { get; set; }
+
         //true la nam, false la nu
         public bool IsMale { get; set; }
 
         public string Address { get; set; }
 
         private List<CartItem> cartItems;
+
         public virtual List<CartItem> CartItems
         {
             get => this.lazyLoader.Load(this, ref this.cartItems);
@@ -36,6 +40,7 @@ namespace DataLayer.Entities
         }
 
         private List<Order> orders;
+
         public virtual List<Order> Orders
         {
             get => this.lazyLoader.Load(this, ref this.orders);
@@ -43,6 +48,7 @@ namespace DataLayer.Entities
         }
 
         private List<BookRating> bookRatings;
+
         public virtual List<BookRating> BookRatings
         {
             get => this.lazyLoader.Load(this, ref this.bookRatings);
@@ -50,6 +56,7 @@ namespace DataLayer.Entities
         }
 
         private List<UserRole> userRoles;
+
         public virtual List<UserRole> UserRoles
         {
             get => this.lazyLoader.Load(this, ref this.userRoles);
@@ -57,6 +64,7 @@ namespace DataLayer.Entities
         }
 
         private List<Blog> blogs;
+
         //chi co admin va sales moi su dung blog de dang tin
         public virtual List<Blog> Blogs
         {

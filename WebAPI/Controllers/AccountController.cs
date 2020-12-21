@@ -1,11 +1,9 @@
-﻿using DataLayer.Entities;
+﻿//Vo Huu Tri - 18521531 UIT
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Account;
 using ServiceLayer.AccountServices;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -20,6 +18,7 @@ namespace WebAPI.Controllers
         {
             this.accountService = accountService;
         }
+
         [HttpPost]
         public async Task<IActionResult> login([FromBody] LoginRequest loginRequest)
         {
@@ -35,13 +34,11 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-
         [HttpGet]
         [Route("/api/account")]
         [Authorize]
         public async Task<IActionResult> GetAccount(Guid id)
         {
-
             var result = await accountService.GetById(id);
             return Ok(result);
         }
@@ -54,7 +51,6 @@ namespace WebAPI.Controllers
             var result = await accountService.DeleteAccount(id);
             return Ok(result);
         }
-
 
         [HttpGet]
         [Authorize(policy: "Admin")]
@@ -73,7 +69,6 @@ namespace WebAPI.Controllers
             var result = await accountService.CreateSales(registerRequest);
             return Ok(result);
         }
-
 
         [HttpGet]
         [Authorize(policy: "Sales")]

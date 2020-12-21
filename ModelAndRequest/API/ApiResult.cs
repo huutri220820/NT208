@@ -1,4 +1,5 @@
-﻿namespace ModelAndRequest.API
+﻿//Vo Huu Tri - 18521531 UIT
+namespace ModelAndRequest.API
 {
     public class ApiResult<T>
     {
@@ -8,9 +9,9 @@
 
         public ApiResult()
         {
-
         }
-        public ApiResult(bool success, string messge, T payload )
+
+        public ApiResult(bool success, string messge, T payload)
         {
             this.success = success;
             this.message = messge;

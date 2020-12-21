@@ -1,4 +1,5 @@
-﻿using DataLayer.Enums;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,36 +13,43 @@ namespace DataLayer.Entities
 
         public Book()
         {
-
         }
+
         public Book(ILazyLoader lazyLoader)
         {
             this.lazyLoader = lazyLoader;
         }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
         public string Description { get; set; }
+
         // dong vi: dong
         public decimal Price { get; set; }
+
         //path
         public string BookImage { get; set; }
+
         // so luong san co
         public int Available { get; set; }
 
         private List<BookRating> bookRatings;
+
         public virtual List<BookRating> BookRatings
         {
             get => this.lazyLoader.Load(this, ref this.bookRatings);
             set => this.bookRatings = value;
         }
+
         //giam gia : % so tien se giam di
         public decimal Sale { get; set; }
 
         //dung cho tim kiem va sap xep
         public string KeyWord { get; set; }
+
         public int WeekScore { get; set; }
         public int MonthScore { get; set; }
         public int YearScore { get; set; }

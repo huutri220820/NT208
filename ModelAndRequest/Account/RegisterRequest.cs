@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿//Vo Huu Tri - 18521531 UIT
+using FluentValidation;
 using System;
 
 namespace ModelAndRequest.Account
@@ -14,7 +15,6 @@ namespace ModelAndRequest.Account
         public string phonenumber { get; set; }
         public string password { get; set; }
         public string confirmPassword { get; set; }
-
     }
 
     public class RegisterRequestValidator : AbstractValidator<RegisterRequest>

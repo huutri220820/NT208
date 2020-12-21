@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿//Vo Huu Tri - 18521531 UIT
+using FluentValidation;
 using System;
 
 namespace ModelAndRequest.Cart
@@ -8,6 +9,7 @@ namespace ModelAndRequest.Cart
         public int bookId { get; set; }
         public int quantity { get; set; }
     }
+
     public class CartRequestValidator : AbstractValidator<CartRequest>
     {
         public CartRequestValidator()

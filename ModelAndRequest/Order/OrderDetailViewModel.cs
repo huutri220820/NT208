@@ -1,3 +1,4 @@
+//Vo Huu Tri - 18521531 UIT
 namespace ModelAndRequest.Order
 {
     public class OrderDetailViewModel

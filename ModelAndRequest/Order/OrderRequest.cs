@@ -1,6 +1,7 @@
-using System;
+//Vo Huu Tri - 18521531 UIT
 using DataLayer.Enums;
 using FluentValidation;
+using System;
 
 namespace ModelAndRequest.Order
 {
@@ -8,6 +9,7 @@ namespace ModelAndRequest.Order
     {
         //public int Id { get; set; }
         public Guid UserId { get; set; }
+
         public String Address { get; set; }
         public DateTime DateCreate { get; set; } = DateTime.Now;
         public DateTime? DateReceive { get; set; }

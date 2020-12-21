@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿//Vo Huu Tri - 18521531 UIT
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Category;
 using ServiceLayer.CategoryServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -15,6 +12,7 @@ namespace WebAPI.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService categoryService;
+
         public CategoryController(ICategoryService categoryService)
         {
             this.categoryService = categoryService;
@@ -26,7 +24,6 @@ namespace WebAPI.Controllers
         {
             var result = await categoryService.AddCategory(categoryRequest);
             return Ok(result);
-
         }
 
         [HttpGet]
@@ -52,6 +49,5 @@ namespace WebAPI.Controllers
             var result = await categoryService.GetAllBook(id);
             return Ok(result);
         }
-
     }
 }

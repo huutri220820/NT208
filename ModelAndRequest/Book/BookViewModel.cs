@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//Vo Huu Tri - 18521531 UIT
 namespace ModelAndRequest.Book
 {
     public class BookViewModel
@@ -17,6 +12,7 @@ namespace ModelAndRequest.Book
         public int? star { get; set; }
         public int? rating_count { get; set; }
         public int available { get; set; }
+
         //base64 or url image
         public string image { get; set; }
     }

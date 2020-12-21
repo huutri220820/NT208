@@ -1,4 +1,5 @@
-﻿namespace DataLayer.Enums
+﻿//Vo Huu Tri - 18521531 UIT
+namespace DataLayer.Enums
 {
     public enum OrderStatus
     {

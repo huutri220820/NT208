@@ -1,3 +1,4 @@
+//Vo Huu Tri - 18521531 UIT
 using DataLayer.EF;
 using DataLayer.Entities;
 using FluentValidation.AspNetCore;
@@ -18,6 +19,7 @@ using ServiceLayer.BookServices;
 using ServiceLayer.CartService;
 using ServiceLayer.CategoryServices;
 using ServiceLayer.OrderServices;
+using ServiceLayer.RatingService;
 using ServiceLayer.SummaryService;
 using System.Collections.Generic;
 
@@ -26,6 +28,7 @@ namespace WebAPI
     public class Startup
     {
         private static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,7 +39,6 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers().AddNewtonsoftJson();
 
             services.AddCors(c =>
@@ -50,7 +52,7 @@ namespace WebAPI
                 option.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
-                //.UseSqlServer(Configuration.GetConnectionString("eshopSqlServerAzure"))
+            //.UseSqlServer(Configuration.GetConnectionString("eshopSqlServerAzure"))
             );
 
             //sqlite
@@ -63,7 +65,7 @@ namespace WebAPI
             //        .UseSqlite(Configuration.GetConnectionString("eshopSqlite"))
             //);
 
-            // use swagger 
+            // use swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Book store", Version = "v1" });
@@ -109,7 +111,6 @@ namespace WebAPI
             //fluent validator
             services.AddControllersWithViews()
                     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
-
 
             // get issuer, key in appsettings.json  => create key
             string issuer = Configuration.GetValue<string>("Tokens:Issuer");
@@ -160,6 +161,7 @@ namespace WebAPI
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ISummaryService, SummaryService>();
+            services.AddScoped<IRatingService, RatingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -181,7 +183,6 @@ namespace WebAPI
                     builder.AllowAnyOrigin()
                             .AllowAnyHeader()
                             .AllowAnyMethod());
-
 
             app.UseAuthorization();
 

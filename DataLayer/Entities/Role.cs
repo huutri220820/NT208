@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿//Vo Huu Tri - 18521531 UIT
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,14 +14,15 @@ namespace DataLayer.Entities
 
         public Role()
         {
-
         }
+
         public Role(ILazyLoader lazyLoader)
         {
             this.lazyLoader = lazyLoader;
         }
 
         private List<UserRole> userRoles;
+
         public virtual List<UserRole> UserRoles
         {
             get => this.lazyLoader.Load(this, ref this.userRoles);
@@ -33,7 +35,6 @@ namespace DataLayer.Entities
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasMany(x => x.UserRoles).WithOne(x => x.Role).HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }

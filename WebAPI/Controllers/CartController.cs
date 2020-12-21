@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿//Vo Huu Tri - 18521531 UIT
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Cart;
 using ServiceLayer.CartService;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -21,7 +20,6 @@ namespace WebAPI.Controllers
             this.cartService = cartService;
         }
 
-
         [Authorize(policy: "User")]
         [HttpGet]
         public IActionResult get()
@@ -32,13 +30,13 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="request"></param>
         /// <param name="isReduce">true : cap nhat so luong cua muot cartItem = so luong gui den, false: cong don</param>
         /// <returns></returns>
-        /// 
+        ///
         [Authorize(policy: "User")]
         [HttpPost]
         public async Task<IActionResult> post(ListCartRequest request, bool isReduce = false)
@@ -57,7 +55,6 @@ namespace WebAPI.Controllers
             var result = await cartService.Clear(userId);
             return Ok();
         }
-
 
         [Authorize(policy: "User")]
         [HttpDelete]

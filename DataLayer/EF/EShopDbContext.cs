@@ -1,4 +1,5 @@
-﻿using DataLayer.Entities;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.Entities;
 using DataLayer.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -19,11 +20,10 @@ namespace DataLayer.EF
         //private static string ConString = "Server=.;Database=Eshopping;Trusted_Connection=True;";
         public EShopDbContext(DbContextOptions options) : base(options)
         {
-
         }
 
         /// <summary>
-        ///khi khởi tạo ưu tiên sử dụng option này thay vì sử dụng option trong file web.startup 
+        ///khi khởi tạo ưu tiên sử dụng option này thay vì sử dụng option trong file web.startup
         /// </summary>
         /// <param name="modelBuilder"></param>
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlite("Filename=Eshop.db");

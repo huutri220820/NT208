@@ -1,4 +1,5 @@
-﻿using DataLayer.EF;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.EF;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,7 @@ namespace ServiceLayer.AccountServices
             this.eShopDbContext = eShopDbContext;
             this.config = config;
         }
+
         /// <summary>
         /// login service
         /// </summary>
@@ -46,10 +48,10 @@ namespace ServiceLayer.AccountServices
             var user = await userManager.FindByNameAsync(loginRequest.username);
             //sqlite
             //var user = userManager.Users.FirstOrDefault(user => user.UserName == loginRequest.Username);
-            if (user == null) 
+            if (user == null)
                 return new ApiResult<object>(success: false, messge: "Mật khẩu hoặc tài khoản không đúng", payload: null);
 
-            if (user.isDelete == true) 
+            if (user.isDelete == true)
                 return new ApiResult<object>(success: false, messge: "Tài khoản đã bị xóa vui lòng liên hệ quản trị viên để mở lại", payload: null);
 
             var result = await signInManager.PasswordSignInAsync(user, loginRequest.password, loginRequest.remember, true);
@@ -59,7 +61,7 @@ namespace ServiceLayer.AccountServices
 
             //tao claims chua thong tin de luu vao payload cua token
             var roles = await userManager.GetRolesAsync(user);
-            
+
             var roleResult = "user";
             roleResult = roles.Contains("Administrator") ? "admin" : roleResult;
             roleResult = roles.Contains("Sales") ? "sales" : roleResult;
@@ -99,9 +101,7 @@ namespace ServiceLayer.AccountServices
             if (!isSale)
                 user.isUser = true;
 
-
             var result = await userManager.CreateAsync(user, registerRequest.password);
-
 
             if (result.Succeeded)
             {
@@ -174,7 +174,6 @@ namespace ServiceLayer.AccountServices
                        where r.Name == role
                        select new { user = u };
 
-
             if (data == null)
                 return new ApiResult<List<AccountModel>>(success: false, messge: "Không tìm thấy user", payload: null);
 
@@ -195,7 +194,6 @@ namespace ServiceLayer.AccountServices
                 return new ApiResult<List<AccountModel>>(success: false, messge: "Không tìm thấy user", payload: null);
 
             return new ApiResult<List<AccountModel>>(success: false, messge: "Thành công", payload: users);
-
         }
 
         /// <summary>
@@ -220,7 +218,7 @@ namespace ServiceLayer.AccountServices
                 user.isDelete = true;
                 var update = await userManager.UpdateAsync(user);
 
-                if(update.Succeeded)
+                if (update.Succeeded)
                     return new ApiResult<bool>(success: false, messge: "Xóa thành công", payload: false);
                 return new ApiResult<bool>(success: false, messge: "Xóa thành công", payload: true);
             }
@@ -262,7 +260,6 @@ namespace ServiceLayer.AccountServices
 
         public bool VerifyToken(string Token)
         {
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenVlalidatorParameter = GetValidationParameters();
 
@@ -283,6 +280,5 @@ namespace ServiceLayer.AccountServices
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"])) // The same key as the one that generate the token
             };
         }
-
     }
 }

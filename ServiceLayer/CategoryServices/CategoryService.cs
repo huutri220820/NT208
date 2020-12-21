@@ -1,10 +1,10 @@
-﻿using DataLayer.EF;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.EF;
 using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using ModelAndRequest.API;
 using ModelAndRequest.Book;
 using ModelAndRequest.Category;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,6 +18,7 @@ namespace ServiceLayer.CategoryServices
         {
             this.eShopDbContext = eShopDbContext;
         }
+
         public async Task<ApiResult<bool>> AddCategory(CategoryRequest categoryRequest)
         {
             var category = new Category()
@@ -34,22 +35,20 @@ namespace ServiceLayer.CategoryServices
             return new ApiResult<bool>(success: true, messge: "Them that bai", payload: false);
         }
 
-        public async Task<ApiResult<bool>> EditCategory(int id ,CategoryRequest categoryRequest)
+        public async Task<ApiResult<bool>> EditCategory(int id, CategoryRequest categoryRequest)
         {
             var category = await eShopDbContext.Categories.FindAsync(id);
-            if(category == null)
+            if (category == null)
                 return new ApiResult<bool>(success: false, messge: "Khong tim that", payload: false);
 
             category.Name = categoryRequest.name;
             category.KeyWord = categoryRequest.keyword ?? category.KeyWord;
 
-            var result =  await eShopDbContext.SaveChangesAsync();
+            var result = await eShopDbContext.SaveChangesAsync();
             if (result > 0)
                 return new ApiResult<bool>(success: true, messge: "thanh cong", payload: true);
 
             return new ApiResult<bool>(success: true, messge: "Khong cap nhat", payload: false);
-
-
         }
 
         public async Task<ApiResult<object>> GetAllBook(int id)
@@ -64,7 +63,7 @@ namespace ServiceLayer.CategoryServices
                 price = x.Price,
                 sale = x.Sale
             }).ToList();
-            if(result == null)
+            if (result == null)
                 return new ApiResult<object>(success: false, messge: "Khong tim thay danh muc", payload: null);
 
             return new ApiResult<object>(success: true, messge: "Thanh cong", payload: new { books = result });
@@ -79,7 +78,6 @@ namespace ServiceLayer.CategoryServices
             }).ToListAsync();
             if (result == null)
                 return new ApiResult<object>(success: false, messge: "Khong tim thay danh muc", payload: null);
-
 
             return new ApiResult<object>(success: true, messge: "Thanh cong", payload: new { categories = result });
         }

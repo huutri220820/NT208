@@ -1,9 +1,5 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//Vo Huu Tri - 18521531 UIT
+using FluentValidation;
 
 namespace ModelAndRequest.Account
 {

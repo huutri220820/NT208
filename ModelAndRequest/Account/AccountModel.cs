@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//Vo Huu Tri - 18521531 UIT
+using System;
 
 namespace ModelAndRequest.Account
 {
@@ -14,7 +11,7 @@ namespace ModelAndRequest.Account
         public Guid id { get; set; }
         public string username { get; set; }
         public string fullName { get; set; }
-        public virtual bool isMale { get; set; } 
+        public virtual bool isMale { get; set; }
         public string email { get; set; }
         public string phonenumber { get; set; }
         public DateTime dob { get; set; }

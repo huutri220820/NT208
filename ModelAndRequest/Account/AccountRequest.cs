@@ -1,9 +1,6 @@
-﻿using FluentValidation;
+﻿//Vo Huu Tri - 18521531 UIT
+using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModelAndRequest.Account
 {
@@ -16,15 +13,15 @@ namespace ModelAndRequest.Account
         public string password { get; set; }
         public string confirmPassword { get; set; }
     }
+
     public class AccountRequestRequestValidator : AbstractValidator<AccountRequest>
-    { 
+    {
         public AccountRequestRequestValidator()
         {
-
             RuleFor(x => x.id).NotEmpty().WithMessage("User id is required");
 
             RuleFor(x => x.username).NotEmpty().WithMessage("User name is required");
-            
+
             RuleFor(x => x.fullName).NotEmpty().WithMessage("Full name is required")
                   .MaximumLength(200).WithMessage("Full name can not over 200 characters");
 
@@ -50,5 +47,4 @@ namespace ModelAndRequest.Account
             });
         }
     }
-
 }

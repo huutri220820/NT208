@@ -1,4 +1,5 @@
-﻿using DataLayer.EF;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.EF;
 using DataLayer.Entities;
 using ModelAndRequest.API;
 using ModelAndRequest.Cart;
@@ -42,7 +43,6 @@ namespace ServiceLayer.CartService
             return new ApiResult<bool>(success: false, messge: "Xoa Khong thanh cong", payload: true);
         }
 
-
         public ApiResult<List<CartViewModel>> Get(Guid userId)
         {
             var data = from user in eShopDbContext.Users
@@ -73,7 +73,6 @@ namespace ServiceLayer.CartService
         {
             listCart?.CartRequests.ForEach(x =>
             {
-
                 var temp = eShopDbContext.CartItems.Find(userId, x.bookId);
                 var book = eShopDbContext.Books.Find(x.bookId);
 
@@ -88,13 +87,13 @@ namespace ServiceLayer.CartService
                     }
                     else
                     {
-                        if(book.Available > 0)
+                        if (book.Available > 0)
                             temp.Quantity = temp.Quantity + x.quantity > book.Available ? book.Available : temp.Quantity + x.quantity;
                     }
                 }
                 else
                 {
-                    if(book.Available > 0)
+                    if (book.Available > 0)
                     {
                         eShopDbContext.CartItems.AddAsync(new CartItem()
                         {
@@ -104,14 +103,13 @@ namespace ServiceLayer.CartService
                         });
                     }
                 }
-                    
             });
 
             var db = await eShopDbContext.SaveChangesAsync();
             var data = from user in eShopDbContext.Users
-                        join cart in eShopDbContext.CartItems on user.Id equals cart.UserId
-                        join book in eShopDbContext.Books on cart.BookId equals book.Id
-                        select new { user = user, book = book, quantity = cart.Quantity };
+                       join cart in eShopDbContext.CartItems on user.Id equals cart.UserId
+                       join book in eShopDbContext.Books on cart.BookId equals book.Id
+                       select new { user = user, book = book, quantity = cart.Quantity };
 
             var result = data?.Select(x =>
                 new CartViewModel()
@@ -130,7 +128,5 @@ namespace ServiceLayer.CartService
                 return new ApiResult<List<CartViewModel>>(success: true, messge: "Thanh cong", payload: result);
             return new ApiResult<List<CartViewModel>>(success: false, messge: "Khong co du lieu tra ve", payload: null);
         }
-
     }
-
 }

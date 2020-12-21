@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//Vo Huu Tri - 18521531 UIT
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
@@ -11,8 +12,10 @@ namespace DataLayer.Entities
         public virtual User User { get; set; }
         public int BookId { get; set; }
         public virtual Book Book { get; set; }
+
         // tu 1 den 5 sao
         public int Rating { get; set; }
+
         public string Comment { get; set; }
     }
 

@@ -1,3 +1,4 @@
+//Vo Huu Tri - 18521531 UIT
 using DataLayer.EF;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,6 @@ namespace WebAPI
             }
 
             await host.RunAsync();
-
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

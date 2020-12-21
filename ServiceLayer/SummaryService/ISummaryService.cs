@@ -1,8 +1,5 @@
-﻿using ModelAndRequest.API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿//Vo Huu Tri - 18521531 UIT
+using ModelAndRequest.API;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.SummaryService

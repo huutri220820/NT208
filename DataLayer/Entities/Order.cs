@@ -1,4 +1,5 @@
-﻿using DataLayer.Enums;
+﻿//Vo Huu Tri - 18521531 UIT
+using DataLayer.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,29 +14,34 @@ namespace DataLayer.Entities
 
         public Order()
         {
-
         }
+
         public Order(ILazyLoader lazyLoader)
         {
             this.lazyLoader = lazyLoader;
         }
+
         public int Id { get; set; }
         public Guid UserId { get; set; }
+
         // dia chi giao hang co the la dia chi user hoac khac
         public string Address { get; set; }
+
         public virtual User User { get; set; }
         public DateTime DateCreate { get; set; }
         public DateTime? DateModify { get; set; }
         public DateTime? DateReceive { get; set; }
         public DateTime? DateReturn { get; set; }
-        public OrderStatus OrderStatus { get; set; } 
+        public OrderStatus OrderStatus { get; set; }
         private List<OrderDetail> orderDetails;
+
         public virtual List<OrderDetail> OrderDetails
         {
             get => this.lazyLoader.Load(this, ref this.orderDetails);
             set => this.orderDetails = value;
         }
-        public decimal TotalPrice { get; set; } 
+
+        public decimal TotalPrice { get; set; }
 
         public bool isDelete { get; set; }
     }
@@ -53,7 +59,6 @@ namespace DataLayer.Entities
             builder.Property(x => x.OrderStatus).IsRequired(true);
             builder.Property(x => x.TotalPrice).IsRequired(true).HasDefaultValue(0);
             builder.Property(x => x.isDelete).HasDefaultValue(false);
-
         }
     }
 }

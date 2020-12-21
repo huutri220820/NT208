@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//Vo Huu Tri - 18521531 UIT
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace DataLayer.EF
@@ -7,6 +8,7 @@ namespace DataLayer.EF
     {
         //private static string ConStringSqlServer = "Server=.;Database=Eshopping;Trusted_Connection=True;";
         private static string ConStringSqlServer = "Server=tcp:shin.database.windows.net,1433;Initial Catalog=NT208;Persist Security Info=False;User ID=shin;Password=Tri22082000@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
         //private static string ConStringSqlite = "Filename=Eshop.db";
         public EShopDbContext CreateDbContext(string[] args)
         {

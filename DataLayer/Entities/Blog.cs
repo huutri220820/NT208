@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Vo Huu Tri - 18521531 UIT
+using System;
 
 namespace DataLayer.Entities
 {
