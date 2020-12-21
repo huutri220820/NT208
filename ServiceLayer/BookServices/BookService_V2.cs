@@ -152,7 +152,7 @@ namespace ServiceLayer.BookServices
                                     x.Category.KeyWord.ToUpper().Contains(searchKey) ||
                                     x.Name.ToUpper().Contains(searchKey) ||
                                     //x.book.Description.Contains(search) ||
-                                    x.KeyWord.ToUpper().Contains(searchKey));
+                                    x.KeyWord.ToUpper().Contains(searchKey) || x.Author.ToUpper().Contains(searchKey));
 
                 if (data == null || data.Count() == 0)
                     return new ApiResult<object>(success: false, messge: $"Không tồn tại sách chứa từ khóa {search}", payload: null);

@@ -59,12 +59,7 @@ namespace ServiceLayer.AccountServices
 
             //tao claims chua thong tin de luu vao payload cua token
             var roles = await userManager.GetRolesAsync(user);
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Email,user.Email),
-                new Claim(ClaimTypes.Role, string.Join(";",roles)),
-                new Claim(ClaimTypes.Name, loginRequest.username)
-            };
+            
             var roleResult = "user";
             roleResult = roles.Contains("Administrator") ? "admin" : roleResult;
             roleResult = roles.Contains("Sales") ? "sales" : roleResult;
@@ -244,6 +239,7 @@ namespace ServiceLayer.AccountServices
             var roles = await userManager.GetRolesAsync(user);
             var claims = new[]
             {
+                new Claim("userId", user.Id.ToString()),
                 new Claim(ClaimTypes.Email,user.Email),
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
                 new Claim(ClaimTypes.Name, user.UserName)

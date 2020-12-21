@@ -17,8 +17,7 @@ namespace DataLayer.Extensions
                 new Category() { Id = 4, Name = "Ngoại ngữ", KeyWord = "ngoaingu, ngoai ngu" },
                 new Category() { Id = 5, Name = "Khoa học kĩ thuật", KeyWord = "khoa hoc ki thuat, khoa hoc ky thuat, Khoa học kỹ thuật" },
                 new Category() { Id = 6, Name = "Lịch sử - Địa lý - Tôn giáo", KeyWord = "lich su, dia li, dia ly, ton giao" },
-                new Category() { Id = 7, Name = "Khoa học kĩ thuật", KeyWord = "khoa hoc, khoa hoc ki thuat, ki thuat" },
-                new Category() { Id = 8, Name = "Khác" }
+                new Category() { Id = 7, Name = "Khác" }
                 );
 
             var description = Lorem.BookDescription;

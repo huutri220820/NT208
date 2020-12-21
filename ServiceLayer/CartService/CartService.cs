@@ -42,51 +42,93 @@ namespace ServiceLayer.CartService
             return new ApiResult<bool>(success: false, messge: "Xoa Khong thanh cong", payload: true);
         }
 
-        public async Task<ApiResult<List<CartViewModel>>> Sync(Guid userId, ListCartRequest listCart, bool isReduce)
-        {
 
+        public ApiResult<List<CartViewModel>> Get(Guid userId)
+        {
+            var data = from user in eShopDbContext.Users
+                       join cart in eShopDbContext.CartItems on user.Id equals cart.UserId
+                       join book in eShopDbContext.Books on cart.BookId equals book.Id
+                       select new { user = user, book = book, quantity = cart.Quantity };
+
+            var result = data?.Select(x =>
+                new CartViewModel()
+                {
+                    bookId = x.book.Id,
+                    bookName = x.book.Name,
+                    price = x.book.Price,
+                    sale = x.book.Sale,
+                    bookImage = x.book.BookImage,
+                    quantity = x.quantity
+                }
+
+            ).ToList();
+
+            if (result != null)
+                return new ApiResult<List<CartViewModel>>(success: true, messge: "Thanh cong", payload: result);
+
+            return new ApiResult<List<CartViewModel>>(success: false, messge: "Khong co du lieu tra ve", payload: null);
+        }
+
+        public async Task<ApiResult<List<CartViewModel>>> Post(Guid userId, ListCartRequest listCart, bool isReduce)
+        {
             listCart?.CartRequests.ForEach(x =>
             {
 
                 var temp = eShopDbContext.CartItems.Find(userId, x.bookId);
+                var book = eShopDbContext.Books.Find(x.bookId);
+
                 if (temp != null)
-                    temp.Quantity = !isReduce ? temp.Quantity + x.quantity : x.quantity;
-                else
-                    eShopDbContext.CartItems.AddAsync(new CartItem()
+                {
+                    if (isReduce)
                     {
-                        UserId = userId,
-                        BookId = x.bookId,
-                        Quantity = x.quantity
-                    });
+                        if (x.quantity == 0)
+                            eShopDbContext.CartItems.Remove(temp);
+                        else
+                            temp.Quantity = x.quantity > book.Available ? book.Available : x.quantity;
+                    }
+                    else
+                    {
+                        if(book.Available > 0)
+                            temp.Quantity = temp.Quantity + x.quantity > book.Available ? book.Available : temp.Quantity + x.quantity;
+                    }
+                }
+                else
+                {
+                    if(book.Available > 0)
+                    {
+                        eShopDbContext.CartItems.AddAsync(new CartItem()
+                        {
+                            UserId = userId,
+                            BookId = x.bookId,
+                            Quantity = x.quantity > book.Available ? book.Available : book.Id,
+                        });
+                    }
+                }
+                    
             });
 
             var db = await eShopDbContext.SaveChangesAsync();
-            if (db > 0)
-            {
-                var data = from user in eShopDbContext.Users
-                           join cart in eShopDbContext.CartItems on user.Id equals cart.UserId
-                           join book in eShopDbContext.Books on cart.BookId equals book.Id
-                           select new { user = user, book = book, quantity = cart.Quantity };
+            var data = from user in eShopDbContext.Users
+                        join cart in eShopDbContext.CartItems on user.Id equals cart.UserId
+                        join book in eShopDbContext.Books on cart.BookId equals book.Id
+                        select new { user = user, book = book, quantity = cart.Quantity };
 
-                var result = data?.Select(x =>
-                    new CartViewModel()
-                    {
-                        bookId = x.book.Id,
-                        bookName = x.book.Name,
-                        price = x.book.Price,
-                        sale = x.book.Sale,
-                        bookImage = x.book.BookImage,
-                        quantity = x.quantity
-                    }
+            var result = data?.Select(x =>
+                new CartViewModel()
+                {
+                    bookId = x.book.Id,
+                    bookName = x.book.Name,
+                    price = x.book.Price,
+                    sale = x.book.Sale,
+                    bookImage = x.book.BookImage,
+                    quantity = x.quantity
+                }
 
-                ).ToList();
+            ).ToList();
 
-                if (result != null)
-                    return new ApiResult<List<CartViewModel>>(success: true, messge: "Thanh cong", payload: result);
-
-                return new ApiResult<List<CartViewModel>>(success: false, messge: "Khong co du lieu tra ve", payload: null);
-            }
-            return new ApiResult<List<CartViewModel>>(success: false, messge: "Dong bo that bai", payload: null);
+            if (result != null)
+                return new ApiResult<List<CartViewModel>>(success: true, messge: "Thanh cong", payload: result);
+            return new ApiResult<List<CartViewModel>>(success: false, messge: "Khong co du lieu tra ve", payload: null);
         }
 
     }

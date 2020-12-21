@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
         [Route("/api/admin/book/top/{option}")]
         public async Task<IActionResult> RatingBook(string option, int page = 1, int size = 6)
         {
-            var result = await bookService.GetBook(page: page, size: size, orderBy: option + "Score", dsc: true);
+            var result = await bookService.GetBook(page: page, size: size, orderBy: option + "Score", dsc: true, isSuspend: false);
             return Ok(result);
         }
 

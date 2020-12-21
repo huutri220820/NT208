@@ -19,7 +19,6 @@ namespace ModelAndRequest.Order
     {
         public OrderRequestValidator()
         {
-            RuleFor(x => x.UserId).NotEmpty().WithMessage("UserId khong the de trong");
             RuleFor(x => x.Address).NotEmpty().WithMessage("Address khong the de trong");
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Category;
 using ServiceLayer.CategoryServices;
 using System;
@@ -20,6 +21,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(policy: "Admin")]
         public async Task<IActionResult> add([FromBody] CategoryRequest categoryRequest)
         {
             var result = await categoryService.AddCategory(categoryRequest);
@@ -36,6 +38,7 @@ namespace WebAPI.Controllers
 
         [Route("/api/category/update/{id}")]
         [HttpPost]
+        [Authorize(policy: "Admin")]
         public async Task<IActionResult> Edit(int id, [FromBody] CategoryRequest categoryRequest)
         {
             var result = await categoryService.EditCategory(id, categoryRequest);

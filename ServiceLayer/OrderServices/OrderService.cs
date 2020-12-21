@@ -28,7 +28,7 @@ namespace ServiceLayer.OrderServices
             ListCartRequest?.CartRequests.ForEach(cart =>
             {
                 var book = eShopDbContext.Books.Find(cart.bookId);
-                if (book != null)
+                if (book != null && book.Available > 0)
                 {
                     cartViews.Add(new CartViewModel()
                     {
@@ -37,9 +37,9 @@ namespace ServiceLayer.OrderServices
                         bookImage = book.BookImage,
                         price = book.Price,
                         sale = book.Sale,
-                        quantity = cart.quantity,
+                        quantity = cart.quantity > book.Available ? book.Available : cart.quantity,
                     });
-                    totalPrice += book.Price * (1 - book.Sale) * cart.quantity;
+                    totalPrice += book.Price * (1 - book.Sale) * (cart.quantity > book.Available ? book.Available : cart.quantity);
                 }
             });
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Cart;
 using ServiceLayer.CartService;
 using System;
@@ -20,6 +21,16 @@ namespace WebAPI.Controllers
             this.cartService = cartService;
         }
 
+
+        [Authorize(policy: "User")]
+        [HttpGet]
+        public IActionResult get()
+        {
+            var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value.ToString());
+            var result = cartService.Get(userId);
+            return Ok(result);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -27,20 +38,33 @@ namespace WebAPI.Controllers
         /// <param name="request"></param>
         /// <param name="isReduce">true : cap nhat so luong cua muot cartItem = so luong gui den, false: cong don</param>
         /// <returns></returns>
+        /// 
+        [Authorize(policy: "User")]
         [HttpPost]
-        [Route("/api/cart/sync/{userId}")]
-        public async Task<IActionResult> SyncCart(Guid userId, ListCartRequest request, bool isReduce = false)
+        public async Task<IActionResult> post(ListCartRequest request, bool isReduce = false)
         {
-            var result = await cartService.Sync(userId, request, isReduce);
+            var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value.ToString());
+            var result = await cartService.Post(userId, request, isReduce);
             return Ok(result);
         }
 
-
-        [HttpGet]
-        [Route("/api/cart/clear/{userId}")]
-        public async Task<IActionResult> ClearCart(Guid userId)
+        [HttpDelete]
+        [Authorize(policy: "User")]
+        [Route("/api/cart/clear")]
+        public async Task<IActionResult> ClearCart()
         {
+            var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value.ToString());
             var result = await cartService.Clear(userId);
+            return Ok();
+        }
+
+
+        [Authorize(policy: "User")]
+        [HttpDelete]
+        public async Task<IActionResult> delete(int bookId)
+        {
+            var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value.ToString());
+            var result = await cartService.Delete(userId, bookId);
             return Ok(result);
         }
     }
