@@ -27,7 +27,7 @@ namespace WebAPI
 {
     public class Startup
     {
-        private static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
+        //private static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
         public Startup(IConfiguration configuration)
         {
@@ -49,7 +49,8 @@ namespace WebAPI
             //connect database, lazy load
             //sqlserver
             services.AddDbContext<EShopDbContext>(option =>
-                option.UseLoggerFactory(MyLoggerFactory)
+                option
+                //.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
                 //.UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
                 .UseSqlServer(Configuration.GetConnectionString("eshopSqlServerAzure"))
