@@ -81,6 +81,7 @@ namespace ServiceLayer.OrderServices
                     Address = OrderRequest.Address,
                     TotalPrice = totalPrice,
                     OrderDetails = orderDetails,
+                    DateCreate = DateTime.Now
                 };
                 eShopDbContext.Orders.Add(newOrder);
             }
@@ -114,6 +115,7 @@ namespace ServiceLayer.OrderServices
                 sdt = order.User.PhoneNumber,
                 dateCreate = order.DateCreate,
                 dateReceive = order.DateReceive,
+                dateReturn = order.DateReturn,
                 totalPrice = order.TotalPrice,
                 orderStatus = order.OrderStatus,
                 fullName = order.User.FullName,
@@ -142,11 +144,6 @@ namespace ServiceLayer.OrderServices
             return new ApiResult<List<OrderDetailViewModel>>(success: true, messge: "Thanh cong", payload: data);
         }
 
-        public Task<ApiResult<List<OrderViewModel>>> GetOrdersUser(Guid UserId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<ApiResult<bool>> UpdateOrder(int OrderId, OrderRequest OrderRequest)
         {
             var order = eShopDbContext.Orders.Find(OrderId);
@@ -157,12 +154,40 @@ namespace ServiceLayer.OrderServices
             order.Address = OrderRequest.Address ?? order.Address;
             if (OrderRequest.OrderStatus != DataLayer.Enums.OrderStatus.DA_DAT_HANG)
                 order.OrderStatus = OrderRequest.OrderStatus;
+            if (OrderRequest.OrderStatus == DataLayer.Enums.OrderStatus.HOAN_TRA)
+                order.DateReturn = DateTime.Now;
 
             var result = await eShopDbContext.SaveChangesAsync();
 
             if (result > 0)
                 return new ApiResult<bool>(success: true, messge: "Thanh cong", payload: true);
             return new ApiResult<bool>(success: false, messge: "Khong cap nhat", payload: false);
+        }
+
+
+        public ApiResult<List<OrderViewModel>> GetOrdersUser(Guid UserId)
+        {
+            var orders = eShopDbContext.Users.Find(UserId)?.Orders;
+            if (orders == null)
+                return new ApiResult<List<OrderViewModel>>(success: false, messge: "Không tìm thấy đơn hàng nào", payload: null); ;
+
+            var result = orders.OrderByDescending(x => x.Id).Select(x => new OrderViewModel()
+            {
+                userId = UserId,
+                address = x.Address,
+                dateCreate = x.DateCreate,
+                dateReceive = x.DateReceive,
+                dateReturn = x.DateReturn,
+                orderStatus = x.OrderStatus,
+                id = x.Id,
+                email = x.User.Email,
+                fullName = x.User.FullName,
+                sdt = x.User.PhoneNumber,
+                totalPrice = x.TotalPrice,
+                userName = x.User.UserName
+            }).ToList();
+
+            return new ApiResult<List<OrderViewModel>>(success: true, messge: "Thanh cong", payload: result);
         }
 
         public Task<ApiResult<bool>> DeleteOrder(Guid UserId, int OrderId)

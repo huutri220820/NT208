@@ -51,8 +51,8 @@ namespace WebAPI
             services.AddDbContext<EShopDbContext>(option =>
                 option.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
-                .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
-            //.UseSqlServer(Configuration.GetConnectionString("eshopSqlServerAzure"))
+                //.UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
+                .UseSqlServer(Configuration.GetConnectionString("eshopSqlServerAzure"))
             );
 
             //sqlite

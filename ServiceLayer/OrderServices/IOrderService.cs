@@ -19,7 +19,7 @@ namespace ServiceLayer.OrderServices
 
         Task<ApiResult<bool>> DeleteOrder(Guid UserId, int OrderId);
 
-        Task<ApiResult<List<OrderViewModel>>> GetOrdersUser(Guid UserId);
+        ApiResult<List<OrderViewModel>> GetOrdersUser(Guid UserId);
 
         Task<ApiResult<List<OrderViewModel>>> GetAllOrders();
 

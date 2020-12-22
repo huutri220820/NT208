@@ -62,5 +62,14 @@ namespace WebAPI.Controllers
             var result = await orderService.GetAllOrders();
             return Ok(result);
         }
+
+        [HttpGet]
+        [Authorize(policy: "User")]
+        public IActionResult user()
+        {
+            var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value);
+            var result = orderService.GetOrdersUser(userId);
+            return Ok(result);
+        }
     }
 }
