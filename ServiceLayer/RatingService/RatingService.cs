@@ -21,13 +21,13 @@ namespace ServiceLayer.RatingService
 
         public ApiResult<string> AddRating(RatingRequest ratingRequest)
         {
-            var countVote = eShopDbContext.Users.Find(ratingRequest.UserId).BookRatings.Where(x => x.BookId == ratingRequest.BookId).Count();
+            var countVote = eShopDbContext.Users.Find(ratingRequest.UserId)?.BookRatings?.Where(x => x.BookId == ratingRequest.BookId)?.Count();
             if (countVote > 4)
-                return new ApiResult<string>(success: false, messge: "Không được vote quá 5 lần !", payload: "MAXIMUM");
+                return new ApiResult<string>(success: false, messge: "Bạn đã đánh giá trước đó nhiều lần !", payload: "MAXIMUM");
 
             var book = eShopDbContext.Books.Find(ratingRequest.BookId);
             if (book == null)
-                return new ApiResult<string>(success: false, messge: "Không tìm thấy cuốn sách mà bạn vote", payload: "NO_BOOK");
+                return new ApiResult<string>(success: false, messge: "Không tìm thấy cuốn sách mà bạn muốn đánh giá", payload: "NO_BOOK");
 
             /// kiem tra kkhac hang da mua sp hay chua
             var isBuy = false;
@@ -45,7 +45,7 @@ namespace ServiceLayer.RatingService
             });
 
             if (!isBuy)
-                return new ApiResult<string>(success: false, messge: "Chưa mua sao vote được 😀", payload: "DONT_BUY");
+                return new ApiResult<string>(success: false, messge: "Chưa mua sao đánh giá được 😀", payload: "DONT_BUY");
 
             var rating = new BookRating()
             {
@@ -62,7 +62,7 @@ namespace ServiceLayer.RatingService
 
             eShopDbContext.BookRatings.Add(rating);
             eShopDbContext.SaveChangesAsync();
-            return new ApiResult<string>(success: true, messge: "Đã gửi vote của bạn", payload: "SUCCESS");
+            return new ApiResult<string>(success: true, messge: "Đã gửi đánh giá của bạn ✔", payload: "SUCCESS");
         }
     }
 }

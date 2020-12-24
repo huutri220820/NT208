@@ -65,11 +65,25 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Authorize(policy: "User")]
-        public IActionResult user()
+        public IActionResult user(bool isDelete = false)
         {
             var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value);
-            var result = orderService.GetOrdersUser(userId);
+            var result = orderService.GetOrdersUser(userId, isDelete);
             return Ok(result);
         }
+
+        /// <summary>
+        /// don hang chi duoc huy neu vua moi tao, sau khi duyet thi se khong the
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        [HttpDelete("{orderId}")]
+        [Authorize(policy: "User")]
+        public async Task<IActionResult> delete(int orderId)
+        {
+            var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value);
+            var result = await orderService.DeleteOrder(userId, orderId);
+            return Ok(0);
+        }    
     }
 }

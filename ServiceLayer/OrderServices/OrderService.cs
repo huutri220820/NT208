@@ -165,9 +165,9 @@ namespace ServiceLayer.OrderServices
         }
 
 
-        public ApiResult<List<OrderViewModel>> GetOrdersUser(Guid UserId)
+        public ApiResult<List<OrderViewModel>> GetOrdersUser(Guid UserId, bool isDelete = false)
         {
-            var orders = eShopDbContext.Users.Find(UserId)?.Orders;
+            var orders = eShopDbContext.Users.Find(UserId)?.Orders.Where(x=>x.isDelete == isDelete);
             if (orders == null)
                 return new ApiResult<List<OrderViewModel>>(success: false, messge: "Không tìm thấy đơn hàng nào", payload: null); ;
 
@@ -190,9 +190,22 @@ namespace ServiceLayer.OrderServices
             return new ApiResult<List<OrderViewModel>>(success: true, messge: "Thanh cong", payload: result);
         }
 
-        public Task<ApiResult<bool>> DeleteOrder(Guid UserId, int OrderId)
+        public async Task<ApiResult<bool>> DeleteOrder(Guid UserId, int OrderId)
         {
-            throw new NotImplementedException();
+            var order = eShopDbContext.Users?.Find(UserId)?.Orders?.Find(x => x.Id == OrderId);
+
+            if (order == null)
+                return new ApiResult<bool>(success: false, messge: "Không tìm thấy đơn hàng", payload: false);
+
+            if(order.OrderStatus == DataLayer.Enums.OrderStatus.DA_DAT_HANG)
+            {
+                order.isDelete = true;
+                var result = await eShopDbContext.SaveChangesAsync();
+                if (result > 0)
+                    return new ApiResult<bool>(success: true, messge: "Hủy đơn hàng thành công", payload: true);
+            }
+
+            return new ApiResult<bool>(success: false, messge: "Hủy đơn hàng không thành công", payload: false);
         }
     }
 }
