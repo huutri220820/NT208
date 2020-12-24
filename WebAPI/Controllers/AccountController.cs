@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ModelAndRequest.Account;
 using ServiceLayer.AccountServices;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -31,6 +32,24 @@ namespace WebAPI.Controllers
         {
             var result = await accountService.Register(registerRequest);
 
+            return Ok(result);
+        }
+
+
+        [HttpPost]
+        [Route("/api/accont/update")] 
+        public async Task<IActionResult> edit([FromBody] RegisterRequest registerRequest)
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("/api/accont/changepassword")]
+        public async Task<IActionResult> changePassord(string oldPassword, string newPassword)
+        {
+            var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value);
+            var result = await accountService.ChangePassword(userId, oldPassword, newPassword);
             return Ok(result);
         }
 

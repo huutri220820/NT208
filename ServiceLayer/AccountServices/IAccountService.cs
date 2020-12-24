@@ -13,6 +13,10 @@ namespace ServiceLayer.AccountServices
 
         Task<ApiResult<bool>> Register(RegisterRequest registerRequest, bool isSale = false);
 
+        Task<ApiResult<bool>> ChangePassword(Guid userId, string oldPassword, string newPassword);
+
+        Task<ApiResult<bool>> ChangeInfo(Guid userId, RegisterRequest registerRequest);
+
         Task<ApiResult<bool>> CreateSales(RegisterRequest registerRequest);
 
         Task<ApiResult<AccountModel>> GetById(Guid id);

@@ -280,5 +280,32 @@ namespace ServiceLayer.AccountServices
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"])) // The same key as the one that generate the token
             };
         }
+
+        public async Task<ApiResult<bool>> ChangePassword(Guid userId, string oldPassword, string newPassword)
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+                return new ApiResult<bool>(success: false, messge: "Không tìm thất user", payload: false);
+
+            var result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (result.Succeeded)
+            {
+                return new ApiResult<bool>(success: true, messge: "Thay đổi mật khẩu thành công", payload: true);
+            }
+
+            return new ApiResult<bool>(success: false, messge: "Mật khẩu hiện tại không đúng", payload: false);
+        }
+
+        public async Task<ApiResult<bool>> ChangeInfo(Guid userId, RegisterRequest registerRequest)
+        {
+            var user = await userManager.FindByIdAsync(userId.ToString());
+
+            user.Email = registerRequest.email;
+            user.NormalizedEmail = registerRequest.email.ToUpper();
+
+            var result = await eShopDbContext.SaveChangesAsync();
+
+            return new ApiResult<bool>(success: false, messge: "Thay đổi thành công", payload: true);
+        }
     }
 }
