@@ -106,7 +106,9 @@ namespace ServiceLayer.AccountServices
             if (result.Succeeded)
             {
                 //sql server
-                await userManager.AddToRoleAsync(user, "User");
+                if (!isSale) await userManager.AddToRoleAsync(user, "User");
+                else await userManager.AddToRoleAsync(user, "Sales");
+
 
                 //sqlite
                 //var roleUser = roleManager.Roles.FirstOrDefault(role => role.Name == (isSale ? "Sales" : "User"));
