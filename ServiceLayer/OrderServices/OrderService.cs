@@ -24,7 +24,7 @@ namespace ServiceLayer.OrderServices
         public ApiResult<object> CreateOrder(ListCartRequest ListCartRequest)
         {
             List<CartViewModel> cartViews = new List<CartViewModel>();
-            decimal totalPrice = 0;
+            float totalPrice = 0;
             ListCartRequest?.CartRequests.ForEach(cart =>
             {
                 var book = eShopDbContext.Books.Find(cart.bookId);
@@ -49,7 +49,7 @@ namespace ServiceLayer.OrderServices
 
         public async Task<ApiResult<bool>> AddOrder(ListCartRequest ListCartRequest, OrderRequest OrderRequest)
         {
-            decimal totalPrice = 0;
+            float totalPrice = 0;
             List<OrderDetail> orderDetails = new List<OrderDetail>();
             ListCartRequest.CartRequests.ForEach(cart =>
             {

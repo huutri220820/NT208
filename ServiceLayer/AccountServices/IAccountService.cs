@@ -15,7 +15,7 @@ namespace ServiceLayer.AccountServices
 
         Task<ApiResult<bool>> ChangePassword(Guid userId, string oldPassword, string newPassword);
 
-        Task<ApiResult<bool>> ChangeInfo(Guid userId, RegisterRequest registerRequest);
+        Task<ApiResult<bool>> ChangeInfo(Guid userId, UpdateAccountRequest accountRequest);
 
         Task<ApiResult<bool>> CreateSales(RegisterRequest registerRequest);
 
@@ -24,5 +24,9 @@ namespace ServiceLayer.AccountServices
         Task<ApiResult<List<AccountModel>>> GetAllAccount(string role);
 
         Task<ApiResult<bool>> DeleteAccount(Guid id);
+
+        Task<ApiResult<bool>> RestoreAccount(Guid id);
+
+        Task<ApiResult<string>> RestorePassword(Guid id, string password);
     }
 }

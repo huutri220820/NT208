@@ -17,6 +17,6 @@ namespace ModelAndRequest.Order
         public DateTime? dateReceive { get; set; }
         public DateTime? dateReturn { get; set; }
         public OrderStatus orderStatus { get; set; }
-        public decimal totalPrice { get; set; }
+        public float totalPrice { get; set; }
     }
 }

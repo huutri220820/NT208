@@ -35,23 +35,34 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-
         [HttpPost]
-        [Route("/api/accont/update")] 
-        public async Task<IActionResult> edit([FromBody] RegisterRequest registerRequest)
+        [Route("/api/account/update")]
+        public async Task<IActionResult> edit([FromBody] UpdateAccountRequest accountRequest)
         {
-            return Ok();
+            var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value);
+            var result = await accountService.ChangeInfo(userId, accountRequest);
+            return Ok(result);
         }
 
         [HttpPost]
         [Authorize]
-        [Route("/api/accont/changepassword")]
+        [Route("/api/account/changepassword")]
         public async Task<IActionResult> changePassord(string oldPassword, string newPassword)
         {
             var userId = Guid.Parse(User.Claims.First(x => x.Type == "userId").Value);
             var result = await accountService.ChangePassword(userId, oldPassword, newPassword);
             return Ok(result);
         }
+
+        [HttpPost]
+        [Authorize(policy: "Admin")]
+        [Route("/api/account/resetpassword")]
+        public async Task<IActionResult> resetPassword(Guid userId , string newPassword)
+        {
+            var result = await accountService.RestorePassword(userId, newPassword);
+            return Ok(result);
+        }
+
 
         [HttpGet]
         [Route("/api/account")]
@@ -68,6 +79,15 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> DeleteAccount(Guid id)
         {
             var result = await accountService.DeleteAccount(id);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Authorize(policy: "Admin")]
+        [Route("/api/admin/account/restore")]
+        public async Task<IActionResult> RestoreAccount(Guid id)
+        {
+            var result = await accountService.RestoreAccount(id);
             return Ok(result);
         }
 

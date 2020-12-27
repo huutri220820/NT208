@@ -41,7 +41,7 @@ namespace DataLayer.Entities
             set => this.orderDetails = value;
         }
 
-        public decimal TotalPrice { get; set; }
+        public float TotalPrice { get; set; }
 
         public bool isDelete { get; set; }
     }

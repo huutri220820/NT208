@@ -195,7 +195,7 @@ namespace ServiceLayer.BookServices
                     return new ApiResult<object>(success: false, messge: $"Không tồn tại sách chứa từ khóa {search}", payload: null);
             }
 
-            int totalPage = (int)Math.Ceiling((decimal)data.Count() / size);
+            int totalPage = (int)Math.Ceiling((float)data.Count() / size);
             data = data.AsQueryable().OrderBy($"book.{orderBy} {(dsc ? "descending" : "")}").Skip((page - 1) * size).Take(size);
 
             var baseUrl = configuration.GetSection("baseUrl").Value;

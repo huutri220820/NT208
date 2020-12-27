@@ -28,7 +28,7 @@ namespace DataLayer.Entities
         public string Description { get; set; }
 
         // dong vi: dong
-        public decimal Price { get; set; }
+        public float Price { get; set; }
 
         //path
         public string BookImage { get; set; }
@@ -45,7 +45,7 @@ namespace DataLayer.Entities
         }
 
         //giam gia : % so tien se giam di
-        public decimal Sale { get; set; }
+        public float Sale { get; set; }
 
         //dung cho tim kiem va sap xep
         public string KeyWord { get; set; }
@@ -63,7 +63,7 @@ namespace DataLayer.Entities
         {
             builder.HasMany(x => x.BookRatings).WithOne(x => x.Book).HasForeignKey(x => x.BookId).OnDelete(DeleteBehavior.Cascade);
 
-            builder.Property(x => x.Name).IsUnicode().IsRequired(true).HasMaxLength(50).HasDefaultValue("Product");
+            builder.Property(x => x.Name).IsUnicode().IsRequired(true).HasMaxLength(500).HasDefaultValue("Product");
             builder.Property(x => x.Description).IsRequired(false);
             builder.Property(x => x.BookImage).HasDefaultValue(Lorem.BookImage).IsRequired(true);
             builder.Property(x => x.Available).IsRequired(true).HasDefaultValue(0);

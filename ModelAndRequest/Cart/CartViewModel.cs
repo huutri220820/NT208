@@ -6,8 +6,8 @@ namespace ModelAndRequest.Cart
         public int bookId { get; set; }
         public string bookName { get; set; }
         public string bookImage { get; set; }
-        public decimal price { get; set; }
-        public decimal sale { get; set; }
+        public float price { get; set; }
+        public float sale { get; set; }
         public int quantity { get; set; }
     }
 }

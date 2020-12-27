@@ -8,6 +8,6 @@ namespace ModelAndRequest.Order
         public string BookImageUrl { get; set; }
         public string BookName { get; set; }
         public int Quantity { get; set; }
-        public decimal TotalPrice { get; set; }
+        public float TotalPrice { get; set; }
     }
 }

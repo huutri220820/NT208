@@ -17,5 +17,6 @@ namespace ModelAndRequest.Account
         public DateTime dob { get; set; }
         public string address { get; set; }
         public string avatar { get; set; }
+        public bool isDelete { get; set; }
     }
 }

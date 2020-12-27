@@ -188,12 +188,13 @@ namespace ServiceLayer.AccountServices
                 dob = data.user.Dob,
                 address = data.user.Address,
                 avatar = data.user.Avatar,
+                isDelete = data.user.isDelete,
             }).ToListAsync();
 
             if (users == null)
                 return new ApiResult<List<AccountModel>>(success: false, messge: "Không tìm thấy user", payload: null);
 
-            return new ApiResult<List<AccountModel>>(success: false, messge: "Thành công", payload: users);
+            return new ApiResult<List<AccountModel>>(success: true, messge: "Thành công", payload: users);
         }
 
         /// <summary>
@@ -219,16 +220,29 @@ namespace ServiceLayer.AccountServices
                 var update = await userManager.UpdateAsync(user);
 
                 if (update.Succeeded)
-                    return new ApiResult<bool>(success: false, messge: "Xóa thành công", payload: false);
-                return new ApiResult<bool>(success: false, messge: "Xóa thành công", payload: true);
+                    return new ApiResult<bool>(success: true, messge: "Xóa thành công", payload: false);
+                return new ApiResult<bool>(success: false, messge: "Xóa không thành công", payload: false);
             }
-
             var result = await userManager.DeleteAsync(user);
 
             if (!result.Succeeded)
                 return new ApiResult<bool>(success: false, messge: "Xóa không thành công", payload: false);
 
-            return new ApiResult<bool>(success: false, messge: "Xóa thành công", payload: true);
+            return new ApiResult<bool>(success: true, messge: "Xóa thành công", payload: true);
+        }
+
+        public async Task<ApiResult<bool>> RestoreAccount(Guid id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+
+            if (user == null)
+                return new ApiResult<bool>(success: false, messge: "Không tìm thấy user", payload: false);
+            user.isDelete = false;
+            var update = await userManager.UpdateAsync(user);
+
+            if (update.Succeeded)
+                return new ApiResult<bool>(success: true, messge: "Xóa thành công", payload: false);
+            return new ApiResult<bool>(success: false, messge: "Xóa không thành công", payload: false);
         }
 
         public async Task<string> GenerateToken(User user)
@@ -296,16 +310,38 @@ namespace ServiceLayer.AccountServices
             return new ApiResult<bool>(success: false, messge: "Mật khẩu hiện tại không đúng", payload: false);
         }
 
-        public async Task<ApiResult<bool>> ChangeInfo(Guid userId, RegisterRequest registerRequest)
+        public async Task<ApiResult<bool>> ChangeInfo(Guid userId, UpdateAccountRequest accountRequest)
         {
             var user = await userManager.FindByIdAsync(userId.ToString());
-
-            user.Email = registerRequest.email;
-            user.NormalizedEmail = registerRequest.email.ToUpper();
+            user.FullName = accountRequest.fullName ?? user.FullName;
+            user.Email = accountRequest.email ?? user.Email;
+            user.NormalizedEmail = accountRequest.email.ToUpper() ?? user.NormalizedEmail;
+            user.Address = accountRequest.address ?? user.Address;
+            user.PhoneNumber = accountRequest.phoneNumber ?? user.PhoneNumber;
+            user.IsMale = accountRequest.isMale ?? user.IsMale;
+            user.Avatar = accountRequest.avatar ?? user.Avatar;
 
             var result = await eShopDbContext.SaveChangesAsync();
 
-            return new ApiResult<bool>(success: false, messge: "Thay đổi thành công", payload: true);
+            if (result > 0)
+                return new ApiResult<bool>(success: true, messge: "Thay đổi thành công", payload: true);
+            return new ApiResult<bool>(success: false, messge: "Thay đổi không thành công", payload: false);
+        }
+
+        public async Task<ApiResult<string>> RestorePassword(Guid id, string password)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+
+            if (user == null)
+                return new ApiResult<string>(success: false, messge: "Không tìm thấy user", payload: "");
+
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+            var result = await userManager.ResetPasswordAsync(user, token, password);
+            if(result.Succeeded)
+                return new ApiResult<string>(success: true, messge: "Thành công", payload: $"Mật khẩu mới của user {id.ToString()} là {password}");
+
+            return new ApiResult<string>(success: false, messge: "Thất bại", payload: "");
         }
     }
 }

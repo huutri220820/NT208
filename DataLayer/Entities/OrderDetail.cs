@@ -13,7 +13,7 @@ namespace DataLayer.Entities
         public int Quantity { get; set; }
 
         // totalprice = priceBook * Quantity
-        public decimal TotalPrice { get; set; }
+        public float TotalPrice { get; set; }
     }
 
     public class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>

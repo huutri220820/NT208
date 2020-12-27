@@ -8,8 +8,8 @@ namespace ModelAndRequest.Book
     {
         public string name { get; set; }
         public string author { get; set; }
-        public decimal price { get; set; }
-        public decimal? sale { get; set; }
+        public float price { get; set; }
+        public float? sale { get; set; }
         public int categoryId { get; set; }
         public int available { get; set; }
         public IFormFile image { get; set; }
