@@ -74,7 +74,8 @@ namespace ServiceLayer.CategoryServices
             var result = await eShopDbContext.Categories?.Select(x => new CategoryViewModel()
             {
                 id = x.Id,
-                name = x.Name
+                name = x.Name,
+                keyword = x.KeyWord
             }).ToListAsync();
             if (result == null)
                 return new ApiResult<object>(success: false, messge: "Khong tim thay danh muc", payload: null);

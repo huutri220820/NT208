@@ -96,6 +96,7 @@ namespace ServiceLayer.AccountServices
                 PhoneNumber = registerRequest.phonenumber,
                 SecurityStamp = string.Empty,
                 EmailConfirmed = true,
+                Address = registerRequest.address
             };
 
             if (!isSale)

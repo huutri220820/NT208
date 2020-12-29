@@ -107,7 +107,7 @@ namespace ServiceLayer.OrderServices
             if (data.Count() == 0)
                 return new ApiResult<List<OrderViewModel>>(success: false, messge: "Khong co don hang nao", payload: null);
 
-            var result = await data.OrderByDescending(x => x.Id).Select(order => new OrderViewModel()
+            var result = await data.Where(x=>x.isDelete == false).OrderByDescending(x => x.Id).Select(order => new OrderViewModel()
             {
                 id = order.Id,
                 address = order.Address,
@@ -200,6 +200,11 @@ namespace ServiceLayer.OrderServices
             if(order.OrderStatus == DataLayer.Enums.OrderStatus.DA_DAT_HANG)
             {
                 order.isDelete = true;
+                order.OrderDetails.ForEach(od =>
+                {
+                    od.Book.Available += od.Quantity;
+                });
+
                 var result = await eShopDbContext.SaveChangesAsync();
                 if (result > 0)
                     return new ApiResult<bool>(success: true, messge: "Hủy đơn hàng thành công", payload: true);

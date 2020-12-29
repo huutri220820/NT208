@@ -19,8 +19,8 @@ namespace ServiceLayer.SummaryService
         public async Task<ApiResult<object>> Get()
         {
             var userCount = await eShopDbContext.Users.Where(x => x.isUser == true).CountAsync();
-            var orderCount = await eShopDbContext.Orders.CountAsync();
-            var newOrderCount = await eShopDbContext.Orders.Where(x => x.OrderStatus == DataLayer.Enums.OrderStatus.DA_DAT_HANG).CountAsync();
+            var orderCount = await eShopDbContext.Orders.Where(x=>x.isDelete == false).CountAsync();
+            var newOrderCount = await eShopDbContext.Orders.Where(x => x.OrderStatus == DataLayer.Enums.OrderStatus.DA_DAT_HANG && x.isDelete == false).CountAsync();
             var productCount = await eShopDbContext.Books.CountAsync();
 
             return new ApiResult<object>(success: true, messge: "Thanh cong", new { user = userCount, order = orderCount, newOrder = newOrderCount, product = productCount });
