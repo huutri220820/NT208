@@ -99,7 +99,7 @@ namespace ServiceLayer.CartService
                         {
                             UserId = userId,
                             BookId = x.bookId,
-                            Quantity = x.quantity > book.Available ? book.Available : book.Id,
+                            Quantity = x.quantity > book.Available ? book.Available : x.quantity,
                         });
                     }
                 }

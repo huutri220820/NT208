@@ -20,6 +20,7 @@ namespace ModelAndRequest.Book
 
         public string keyWord { get; set; }
         public string description { get; set; }
+        public string url { get; set; }
         public List<RatingViewModel> comments { get; set; }
     }
 }

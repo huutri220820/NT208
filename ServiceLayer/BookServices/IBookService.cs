@@ -13,6 +13,7 @@ namespace ServiceLayer.BookServices
         Task<ApiResult<object>> GetBook(int page = 1, int size = 10, string orderBy = "Price", bool dsc = false, int? categoryId = null, string search = null, bool? isSuspend = null);
 
         Task<ApiResult<object>> GetBookById(int id);
+        Task<ApiResult<object>> GetBookByUrl(string url);
 
         // return id product
         Task<ApiResult<bool>> AddBook(BookRequest bookRequest);
@@ -21,6 +22,5 @@ namespace ServiceLayer.BookServices
 
         Task<ApiResult<bool>> DeleteBook(int id);
 
-        bool TestImage(IFormFile image);
     }
 }

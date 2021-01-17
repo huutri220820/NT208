@@ -1,5 +1,6 @@
 ﻿//Vo Huu Tri - 18521531 UIT
 using DataLayer.Enums;
+using DataLayer.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -55,6 +56,8 @@ namespace DataLayer.Entities
         public int YearScore { get; set; }
 
         public bool isDelete { get; set; }
+        public string Url { get; set; }
+
     }
 
     public class BookConfiguration : IEntityTypeConfiguration<Book>
@@ -75,4 +78,6 @@ namespace DataLayer.Entities
             builder.Property(x => x.isDelete).HasDefaultValue(false);
         }
     }
+
+    
 }

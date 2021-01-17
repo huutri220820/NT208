@@ -156,7 +156,7 @@ namespace WebAPI
             //dependency injection
             services.AddScoped<IAccountService, AccountService>();
             //services.AddScoped<IBookService, BookService>();
-            services.AddScoped<IBookService, BookService_V2>();
+            services.AddScoped<IBookService, BookService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IOrderService, OrderService>();

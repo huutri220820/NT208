@@ -44,6 +44,14 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("/api/book/url/{url}")]
+        public async Task<IActionResult> GetBookByUrl(string url)
+        {
+            var result = await bookService.GetBookByUrl(url);
+            return Ok(result);
+        }
+
         [HttpPost]
         [Authorize(policy: "Admin")]
         [Route("/api/admin/book")]
@@ -76,14 +84,6 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> RatingBook(string option, int page = 1, int size = 6)
         {
             var result = await bookService.GetBook(page: page, size: size, orderBy: option + "Score", dsc: true, isSuspend: false);
-            return Ok(result);
-        }
-
-        [HttpPost]
-        [Route("/api/image")]
-        public IActionResult PostImage(IFormFile image)
-        {
-            var result = bookService.TestImage(image);
             return Ok(result);
         }
     }

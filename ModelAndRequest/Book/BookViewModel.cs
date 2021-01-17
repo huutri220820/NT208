@@ -12,6 +12,7 @@ namespace ModelAndRequest.Book
         public int? star { get; set; }
         public int? rating_count { get; set; }
         public int available { get; set; }
+        public string url { get; set; }
 
         //base64 or url image
         public string image { get; set; }
