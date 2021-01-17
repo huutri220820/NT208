@@ -51,8 +51,8 @@ namespace WebAPI
                 option
                 //.UseLoggerFactory(MyLoggerFactory)
                 .UseLazyLoadingProxies()
-                .UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
-                //.UseSqlServer(Configuration.GetConnectionString("eshopSqlServerAzure"))
+                //.UseSqlServer(Configuration.GetConnectionString("eshopSqlServer"))
+                .UseSqlServer(Configuration.GetConnectionString("eshopSqlServerAzure"))
             );
 
             //sqlite
