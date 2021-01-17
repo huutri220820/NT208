@@ -58,6 +58,10 @@ Mở terminal đối với ubuntu, macos; cmd hoặc powershell đối với win
 
    Truy cập vào : http://localhost:5000/swagger/index.html
 
+**Chú ý**: Nếu database không được khởi tạo 
+
+Mở Sql Server Configuration Manager --> 
+
 **Nếu bạn muốn đăng nhập vui lòng sử dụng những tài khoản sau :** 
 
 username : user, password : 1 (role user)
