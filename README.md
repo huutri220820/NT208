@@ -29,8 +29,15 @@
 **Yêu cầu hệ thống**
 
 1. Hệ điều hành : Windows, Ubuntu, MacOS 
+
 2. Môi trường .net core 3.1: cài đặt tại : https://dotnet.microsoft.com/download/dotnet-core/3.1
-3. Microsoft SQL Server 
+
+3. Microsoft SQL Server  
+
+   ​	Nếu muốn dùng database local vào WebAPI -> Startup.cs và sửa lại như hình bên dưới
+
+   ![use-local-database](use-local-database.png)	
+
 4. Git
 
 **Các bước cài đặt**
@@ -57,10 +64,6 @@ Mở terminal đối với ubuntu, macos; cmd hoặc powershell đối với win
    > dotnet run
 
    Truy cập vào : http://localhost:5000/swagger/index.html
-
-**Chú ý**: Nếu database không được khởi tạo 
-
-Mở Sql Server Configuration Manager --> 
 
 **Nếu bạn muốn đăng nhập vui lòng sử dụng những tài khoản sau :** 
 
