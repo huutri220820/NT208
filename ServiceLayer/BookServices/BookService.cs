@@ -152,7 +152,7 @@ namespace ServiceLayer.BookServices
                 data = data.Where(x => x.Category.Name.ToUpper().Contains(searchKey) ||
                                     x.Category.KeyWord.ToUpper().Contains(searchKey) ||
                                     x.Name.ToUpper().Contains(searchKey) ||
-                                    //x.book.Description.Contains(search) ||
+                                    x.Url.ToUpper().Contains(search) ||
                                     x.KeyWord.ToUpper().Contains(searchKey) || x.Author.ToUpper().Contains(searchKey));
 
                 if (data == null || data.Count() == 0)
